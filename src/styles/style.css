@@ -16,7 +16,7 @@ div {
 }
 
 body {
-  /*background-image: url('../../public/images/grey-sea_40.jpg');*/
+  background-image: url('../images/grey-sea_40.jpg');
   background-repeat: no-repeat; 
   background-attachment: fixed;  
   margin: 0;
