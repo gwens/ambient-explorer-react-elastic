@@ -3,11 +3,12 @@ import Header from './Header';
 import SearchBar from './SearchBar';
 import Results from './Results';
 import Viewer from './Viewer';
-import emails from '../sample-emails';
+//import emails from '../sample-emails';
 
 class App extends React.Component {
   constructor() {
     super();
+    this.fetchEmails = this.fetchEmails.bind(this);
     this.setSearchString = this.setSearchString.bind(this);
     this.setDateFilters = this.setDateFilters.bind(this);
     this.selectEmail = this.selectEmail.bind(this);
@@ -18,6 +19,7 @@ class App extends React.Component {
     // Get initial state
     // Not sure if should use numbers or strings for dates (especially months, as 01, 02, etc)
     this.state = {
+      emails: {},
       searchString: "",
       dateFilters: {
         yearFrom: "1994",
@@ -28,6 +30,22 @@ class App extends React.Component {
       selectedEmail: null, // Holds the email to be displayed in the viewer
       resultsPage: 1
     };
+    // Get the emails from the remote URL
+    this.fetchEmails();
+  }
+
+  // Gets emails from a remote URL and sets them in state
+  fetchEmails() {
+    fetch('https://api.myjson.com/bins/7crgt', {
+      mode: 'cors'
+    })
+      .then(response => response.json())
+      .catch(error => console.log(error))
+      .then(response => {
+        // NB only one level deep copy!
+        const emails = Object.assign(response);
+        this.setState({ emails });
+      });
   }
 
   setSearchString(searchString){
@@ -77,8 +95,8 @@ class App extends React.Component {
       <div className="navigator">
         <Header />
         <SearchBar setSearchString={this.setSearchString} dateFilters={this.state.dateFilters} setDateFilters={this.setDateFilters} clearEmailSelection={this.clearEmailSelection} setPage={this.setPage}/>
-        <Results emails={emails} dateFilters={this.state.dateFilters} searchString={this.state.searchString} selectEmail={this.selectEmail} resultsPage={this.state.resultsPage} nextPage={this.nextPage} prevPage={this.prevPage}/>
-        <Viewer selectedEmail={emails[this.state.selectedEmail]} searchString={this.state.searchString}/>
+        <Results emails={this.state.emails} dateFilters={this.state.dateFilters} searchString={this.state.searchString} selectEmail={this.selectEmail} resultsPage={this.state.resultsPage} nextPage={this.nextPage} prevPage={this.prevPage}/>
+        <Viewer selectedEmail={this.state.emails[this.state.selectedEmail]} searchString={this.state.searchString}/>
       </div>
     )
   }
