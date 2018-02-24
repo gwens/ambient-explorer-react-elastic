@@ -35,11 +35,13 @@ class App extends React.Component {
   }
 
   setDateFilters(filters){
-    // Create a copy of the current state first... but we are not updating them but replacing them completely so no point
+    // Create a copy of the current state first... 
     // Spread operator not working in new build config, need to figure out Babel?
     //const dateFilters = {...filters};
     //this.setState({ dateFilters });
-    this.setState({filters});
+    // Replacing spread with Object.assign (works as object is only one level deep)
+    const dateFilters = Object.assign({}, filters);
+    this.setState({ dateFilters });
   }
 
   selectEmail(id){
