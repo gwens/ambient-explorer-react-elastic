@@ -1,4 +1,6 @@
-# React Aviary
+# Ambient Explorer with React and Elasticsearch
+
+Requires email data from elasticsearch on locallhost
 
 ## Install
 
