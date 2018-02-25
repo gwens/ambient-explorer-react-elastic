@@ -3,13 +3,13 @@ import Header from './Header';
 import SearchBar from './SearchBar';
 import Results from './Results';
 import Viewer from './Viewer';
-import emailArray from '../email-array';
-
-console.log(emailArray.length);
+//import emailArray from '../email-array';
+//console.log(emailArray.length);
 
 class App extends React.Component {
   constructor() {
     super();
+    this.fetchEmailsFromEs = this.fetchEmailsFromEs.bind(this);
     this.fetchEmails = this.fetchEmails.bind(this);
     this.setSearchString = this.setSearchString.bind(this);
     this.setDateFilters = this.setDateFilters.bind(this);
@@ -32,8 +32,37 @@ class App extends React.Component {
       selectedEmail: null, // Holds the email to be displayed in the viewer
       resultsPage: 1
     };
+    // Get emails from elasticsearch
+    this.fetchEmailsFromEs();
     // Get the emails from the remote URL
-    this.fetchEmails();
+    //this.fetchEmails();
+  }
+
+  // Gets emails from elasticsearch and console.logs them
+  fetchEmailsFromEs() {
+    const elasticUrl = "http://localhost:9200/emails/_search"
+    const searchTerm = "aphex";
+    let query = {"query": {"bool": {"should": [{ "match": { "subject": `${searchTerm}` } }]}}};
+
+    fetch(elasticUrl, {
+      method: 'POST', 
+      body: JSON.stringify(query), 
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    }).then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => {
+      let results = {};
+      response.hits.hits.map(hit => {
+        let email = hit._source;
+        email.score = hit._score;
+        let id = hit._source.id;
+        results[`${id}`] = email;
+      });
+      const emails = Object.assign(results);
+      this.setState({ emails });
+    });
   }
 
   // Gets emails from a remote URL and sets them in state
