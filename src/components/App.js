@@ -38,9 +38,10 @@ class App extends React.Component {
     //this.fetchEmails();
   }
 
-  // Gets emails from elasticsearch and console.logs them
+  // Gets emails from elasticsearch and sets them in state
   fetchEmailsFromEs() {
     const elasticUrl = "http://localhost:9200/emails/_search"
+    // Fixed search term for now to get it working
     const searchTerm = "aphex";
     let query = {"query": {"bool": {"should": [{ "match": { "subject": `${searchTerm}` } }]}}};
 
