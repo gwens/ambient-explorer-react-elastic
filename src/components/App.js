@@ -3,7 +3,9 @@ import Header from './Header';
 import SearchBar from './SearchBar';
 import Results from './Results';
 import Viewer from './Viewer';
-//import emails from '../sample-emails';
+import emailArray from '../email-array';
+
+console.log(emailArray.length);
 
 class App extends React.Component {
   constructor() {

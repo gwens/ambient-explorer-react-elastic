@@ -1,0 +1,37 @@
+[
+  {
+      "subject":  "Okay, I think this works... :)",
+      "from":  "Brian Behlendorf \u003cbrian@hyperreal.com\u003e",
+      "id":  "amb_1994_07_2",
+      "dateString":  "Sun, 17 Jul 1994 18:51:42 -0700 (PDT)",
+      "content":  "\u003cbr\u003e\u003cbr\u003eThis should work now.  \u003cbr\u003e\u003cbr\u003e"
+  },
+  {
+      "subject":  "Re: Okay, I think this works... :)",
+      "from":  "Mike Brown \u003cmike@hyperreal.com\u003e",
+      "id":  "amb_1994_07_3",
+      "dateString":  "Sun, 17 Jul 1994 20:00:00 -0700 (PDT)",
+      "content":  "\u003cbr\u003e\u003e \u003cbr\u003e\u003e \u003cbr\u003e\u003e This should work now.  \u003cbr\u003e\u003e \u003cbr\u003e\u003e \u003cbr\u003e\u003cbr\u003eI believe it did.  \u003cbr\u003e\u003cbr\u003e"
+  },
+  {
+      "subject":  "Just a quick hello...",
+      "from":  "*molly* \u003cmollfrey@MIT.EDU\u003e",
+      "id":  "amb_1994_07_4",
+      "dateString":  "Wed, 27 Jul 94 15:51:10 EDT",
+      "content":  "\u003cbr\u003e\u003cbr\u003e\u003cbr\u003eThis is just to say hi....\u003cbr\u003emainly to you, Mike, glorious list setter-upper,\u003cbr\u003eand you, Fletcher...\u003cbr\u003esince the three of us may be the only ones on this\u003cbr\u003ecurrently inactive list thus far.  =)\u003cbr\u003e(My apologies to all others, if we are not the sole three...)\u003cbr\u003e\u003cbr\u003eRemember...\u003cbr\u003e\u003cbr\u003eAmbience is all around you.\u003cbr\u003e\u003cbr\u003e*molly*\u003cbr\u003e"
+  },
+  {
+      "subject":  "please pardon this sloppy message",
+      "from":  "Mike Brown \u003cmike@hyperreal.com\u003e",
+      "id":  "amb_1994_07_5",
+      "dateString":  "Wed, 27 Jul 1994 19:32:55 -0700 (PDT)",
+      "content":  "\u003cbr\u003eForwarded message:\u003cbr\u003e\u003eFrom owner-ambient@hyperreal.com  Wed Jul 27 19:28:04 1994\u003cbr\u003eDate: Wed, 27 Jul 1994 19:28:04 -0700\u003cbr\u003eMessage-Id: \u003c199407280228.TAA18484@taz.hyperreal.com\u003e\u003cbr\u003eTo: owner-ambient@hyperreal.com\u003cbr\u003eFrom: owner-ambient@hyperreal.com\u003cbr\u003eSubject: BOUNCE ambient@hyperreal.com: Non-member submission from [Mail Delivery Subsystem \u003cMAILER-DAEMON@hyperreal.com\u003e]\u003cbr\u003e\u003eFrom ambient-owner@hyperreal.com  Wed Jul 27 19:28:01 1994\u003cbr\u003eReceived: by taz.hyperreal.com (8.6.9/8.6.5) id TAA18478; Wed, 27 Jul 1994 19:28:01 -0700Received: from localhost by taz.hyperreal.com (8.6.9/8.6.5) with internal id OAA12996; Wed, 27 Jul 1994 14:25:12 -0700Date: Wed, 27 Jul 1994 14:25:12 -0700\u003cbr\u003eFrom: Mail Delivery Subsystem \u003cMAILER-DAEMON@hyperreal.com\u003e\u003cbr\u003eSubject: Returned mail: User unknown\u003cbr\u003eMessage-Id: \u003c199407272125.OAA12996@taz.hyperreal.com\u003e\u003cbr\u003eTo: mike@hyperreal.com\u003cbr\u003eMIME-Version: 1.0\u003cbr\u003eContent-Type: multipart/mixed; boundary=\u0026#34;OAA12996.775344312/taz.hyperreal.com\u0026#34;Sender: mike@hyperreal.com\u003cbr\u003e\u003cbr\u003eThis is a MIME-encapsulated message\u003cbr\u003e\u003cbr\u003e--OAA12996.775344312/taz.hyperreal.com\u003cbr\u003e\u003cbr\u003eThe original message was received at Wed, 27 Jul 1994 14:25:12 -0700\u003cbr\u003efrom mike@localhost\u003cbr\u003e\u003cbr\u003e   ----- The following addresses had delivery problems -----\u003cbr\u003ea  (unrecoverable error)\u003cbr\u003e\u003cbr\u003e   ----- Transcript of session follows -----\u003cbr\u003e550 a... User unknown\u003cbr\u003e\u003cbr\u003e   ----- Original message follows -----\u003cbr\u003e\u003cbr\u003e--OAA12996.775344312/taz.hyperreal.com\u003cbr\u003eContent-Type: message/rfc822\u003cbr\u003e\u003cbr\u003eReturn-Path: mike\u003cbr\u003eReceived: by taz.hyperreal.com (8.6.9/8.6.5) id OAA12994; Wed, 27 Jul 1994 14:25:12 -0700From: Mike Brown \u003cmike\u003e\u003cbr\u003eMessage-Id: \u003c199407272125.OAA12994@taz.hyperreal.com\u003e\u003cbr\u003eSubject: BOUNCE ambient@hyperreal.com: Non-member submission from [\u0026#34;Mike J. Brown\u0026#34; \u003cmjbrown@magnus.acs.ohio-state.edu\u003e] (fwd)mbientTo: a\u003cbr\u003eDate: Wed, 27 Jul 1994 14:25:11 -0700 (PDT)\u003cbr\u003eX-Mailer: ELM [version 2.4 PL23]\u003cbr\u003eContent-Type: text\u003cbr\u003eContent-Length: 1233      \u003cbr\u003e\u003cbr\u003e\u003cbr\u003eThis is a test of putting the word test in a messsage and of forw\u003cbr\u003eand of typing when there is a lot of lag\u003cbr\u003eand of forwarding a message from a person who isn\u0027t on the list\u003cbr\u003e\u003cbr\u003e\u003cbr\u003eForwarded message:\u003cbr\u003e\u003e From owner-ambient@hyperreal.com  Wed Jul 27 14:19:25 1994\u003cbr\u003e\u003e Date: Wed, 27 Jul 1994 14:19:25 -0700\u003cbr\u003e\u003e Message-Id: \u003c199407272119.OAA12917@taz.hyperreal.com\u003e\u003cbr\u003e\u003e To: owner-ambient@hyperreal.com\u003cbr\u003e\u003e From: owner-ambient@hyperreal.com\u003cbr\u003e\u003e Subject: BOUNCE ambient@hyperreal.com: Non-member submission from [\u0026#34;Mike J. Brown\u0026#34; \u003cmjbrown@magnus.acs.ohio-state.edu\u003e]\u003cbr\u003e\u003e \u003cbr\u003e\u003e \u003eFrom ambient-owner@hyperreal.com  Wed Jul 27 14:19:23 1994\u003cbr\u003e\u003e Received: from bottom.magnus.acs.ohio-state.edu by taz.hyperreal.com (8.6.9/8.6.5) with ESMTP id OAA12912; Wed, 27 Jul 1994 14:19:20 -0700\u003cbr\u003e\u003e Received: from localhost by bottom.magnus.acs.ohio-state.edu (8.6.4/4.940426)\u003cbr\u003e\u003e \tid RAA10563; Wed, 27 Jul 1994 17:18:32 -0400\u003cbr\u003e\u003e From: \u0026#34;Mike J. Brown\u0026#34; \u003cmjbrown@magnus.acs.ohio-state.edu\u003e\u003cbr\u003e\u003e Message-Id: \u003c199407272118.RAA10563@bottom.magnus.acs.ohio-state.edu\u003e\u003cbr\u003e\u003e Subject: exam\u003cbr\u003e\u003e To: ambient@hyperreal.com\u003cbr\u003e\u003e Date: Wed, 27 Jul 94 17:18:31 EDT\u003cbr\u003e\u003e X-Mailer: ELM [version 2.3 PL11]\u003cbr\u003e\u003e \u003cbr\u003e\u003e \u003cbr\u003e\u003e This is a test of what happens when someone who isn\u0027t on the list tries to\u003cbr\u003e\u003e post to it.\u003cbr\u003e\u003e \u003cbr\u003e\u003e Mike\u003cbr\u003e\u003e \u003cbr\u003e\u003cbr\u003e\u003cbr\u003e--OAA12996.775344312/taz.hyperreal.com--\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e\u003cbr\u003e"
+  },
+  {
+      "subject":  "Is it up?",
+      "from":  "Rbc III \u003crobot@svpal.org\u003e",
+      "id":  "amb_1994_07_6",
+      "dateString":  "Sun, 31 Jul 1994 13:30:00 -0700 (PDT)",
+      "content":  "\u003cbr\u003e\u003cbr\u003eIs the list up now?  I\u0027m glad someone finally did this.  Ambience is god and this list will hopefully be a good temple.\u003cbr\u003e\u003cbr\u003e-robert\u003cbr\u003e"
+  }
+]
