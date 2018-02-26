@@ -30,6 +30,7 @@ class Results extends React.Component {
     return (
       <div className="results">
         <button onClick={this.props.prevPage}>&#8249;&#8249;</button>
+        <span>page: {resultsPage}</span>
         <button onClick={resultsPage <= numFullPages ? this.props.nextPage : null}>&#8250;&#8250;</button>
         <ul>
           {
