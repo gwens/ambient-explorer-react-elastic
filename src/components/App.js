@@ -52,7 +52,7 @@ class App extends React.Component {
             "filter": {
                 "range": {
                   "id": {
-                    "gte": "amb_2000_12",
+                    "gte": `amb_${this.state.dateFilters.yearFrom}_${this.state.dateFilters.monthFrom}`,
                     "lte": "amb_2001_07",
                     "format": "'amb_'yyyy'_'mm"
                     }
@@ -116,6 +116,7 @@ class App extends React.Component {
     // Replacing spread with Object.assign (works as object is only one level deep)
     const dateFilters = Object.assign({}, filters);
     this.setState({ dateFilters });
+    this.fetchEmailsFromEs("aphex");
   }
 
   selectEmail(id){
