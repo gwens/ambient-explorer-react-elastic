@@ -39,7 +39,10 @@ class App extends React.Component {
   }
 
   // Gets emails from elasticsearch and sets them in state
-  fetchEmailsFromEs(searchString) {
+  fetchEmailsFromEs() {
+    //console.log(searchString);
+    const searchString = this.state.searchString;
+    console.log(searchString);
     const elasticUrl = "http://localhost:9200/emails/_search"
     // Default query for no search term, returns all documents
     let query = {"query": {"match_all" : {}}};
@@ -104,8 +107,8 @@ class App extends React.Component {
   }*/
 
   setSearchString(searchString){
-    this.setState({ searchString });
-    this.fetchEmailsFromEs(searchString);
+    // Fetch new emails as a callback once setState is finished
+    this.setState({ searchString }, () => {this.fetchEmailsFromEs()});
   }
 
   setDateFilters(filters){
@@ -116,7 +119,7 @@ class App extends React.Component {
     // Replacing spread with Object.assign (works as object is only one level deep)
     const dateFilters = Object.assign({}, filters);
     this.setState({ dateFilters });
-    this.fetchEmailsFromEs("aphex");
+    //this.fetchEmailsFromEs();
   }
 
   selectEmail(id){
