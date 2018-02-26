@@ -4,56 +4,8 @@ import EmailPreview from './EmailPreview';
 class Results extends React.Component {
   constructor() {
     super();
-    //this.getSearchResults = this.getSearchResults.bind(this);
-    //this.filterEmailsByDate = this.filterEmailsByDate.bind(this);
+    this.getPageOfResults = this.getPageOfResults.bind(this);
   }
-
-  /*filterEmailsByDate() {
-    const emails = this.props.emails;
-    const emailIds = Object.keys(emails);
-    const dateFilters = this.props.dateFilters;
-    const dateFromString = dateFilters.yearFrom + "_" + dateFilters.monthFrom;
-    const dateToString = dateFilters.yearTo + "_" + dateFilters.monthTo;
-    const filteredEmailIds = emailIds.filter(id => (dateFromString <= id.slice(4, 11)) && (id.slice(4,11) <= dateToString));
-    // Sort the emails into chronological order, oldest first
-    filteredEmailIds.sort((a, b) => a > b ? 1 : -1);
-    return filteredEmailIds;
-  }*/
-
-  /*getSearchResultsOld(emailIds) {
-    const searchString = this.props.searchString;
-    const emails = this.props.emails;
-    const searchResults = emailIds.reduce((resultsArr, key) => {
-      if(emails[key].subject && emails[key].subject.indexOf(searchString) > -1) {
-        resultsArr.push(key);
-      }
-      return resultsArr;
-    }, []);
-    return searchResults;
-  }*/
-
-  /*getSearchResults(emailIds) {
-    const emails = this.props.emails;
-    const searchString = this.props.searchString.toLowerCase(); // change to case insensitive
-    let resultsAll = emailIds.reduce((accumulator, id) => {
-      // Using .indexOf instead of .match(regex) for performance
-      const subjectMatch = emails[id].subject && (emails[id].subject.toLowerCase().indexOf(searchString) > -1) ? 3 : 0;
-      const fromMatch = emails[id].from && (emails[id].from.toLowerCase().indexOf(searchString) > -1) ? 2 : 0;
-      const contentMatch = emails[id].content && (emails[id].content.toLowerCase().indexOf(searchString) > -1) ? 1 : 0;
-      const totalMatch = subjectMatch + fromMatch + contentMatch;
-      // If there is a match
-      if (totalMatch) {
-        // Assign a priority number and at it to the result object as an additional property so we can sort them after
-        accumulator.push({ "id" : id, "priority": totalMatch});
-      }
-      return accumulator;
-    }, [])
-    const resultsSorted = resultsAll.sort((a,b) => a.priority > b.priority ? -1 : 1);
-    // Map the array of objects back to an array of the IDs only before returning it
-    const resultsIds = resultsSorted.map(item => item.id);
-    console.log(resultsIds);
-    return resultsIds;
-  }*/
 
   getPageOfResults(searchResults, maxResults, resultsPage) {
     const totalResults = searchResults.length;
@@ -69,8 +21,7 @@ class Results extends React.Component {
   }
 
   render() {
-    //const filteredEmailIds = this.filterEmailsByDate();
-    //const searchResults = this.getSearchResults(filteredEmailIds);
+    // Search results are handled as an array of ids
     const searchResults = Object.keys(this.props.emails);
     const maxResults = 25;
     const resultsPage = this.props.resultsPage;

@@ -3,14 +3,11 @@ import Header from './Header';
 import SearchBar from './SearchBar';
 import Results from './Results';
 import Viewer from './Viewer';
-//import emailArray from '../email-array';
-//console.log(emailArray.length);
 
 class App extends React.Component {
   constructor() {
     super();
     this.fetchEmailsFromEs = this.fetchEmailsFromEs.bind(this);
-    //this.fetchEmails = this.fetchEmails.bind(this);
     this.setSearchString = this.setSearchString.bind(this);
     this.setDateFilters = this.setDateFilters.bind(this);
     this.selectEmail = this.selectEmail.bind(this);
@@ -19,7 +16,6 @@ class App extends React.Component {
     this.prevPage = this.prevPage.bind(this);
     this.setPage = this.setPage.bind(this);
     // Get initial state
-    // Not sure if should use numbers or strings for dates (especially months, as 01, 02, etc)
     this.state = {
       emails: {},
       searchString: "",
@@ -34,8 +30,6 @@ class App extends React.Component {
     };
     // Get emails from elasticsearch
     this.fetchEmailsFromEs();
-    // Get the emails from the remote URL
-    //this.fetchEmails();
   }
 
   // Gets emails from elasticsearch and sets them in state
@@ -95,20 +89,6 @@ class App extends React.Component {
     });
   }
 
-  // Gets emails from a remote URL and sets them in state
-  /*fetchEmails() {
-    fetch('https://api.myjson.com/bins/7crgt', {
-      mode: 'cors'
-    })
-      .then(response => response.json())
-      .catch(error => console.log(error))
-      .then(response => {
-        // NB only one level deep copy!
-        const emails = Object.assign(response);
-        this.setState({ emails });
-      });
-  }*/
-
   setSearchString(searchString){
     // Fetch new emails as a callback once setState is finished
     this.setState({ searchString }, () => { this.fetchEmailsFromEs() });
@@ -122,7 +102,6 @@ class App extends React.Component {
     // Replacing spread with Object.assign (works as object is only one level deep)
     const dateFilters = Object.assign({}, filters);
     this.setState({ dateFilters }, () => { this.fetchEmailsFromEs() });
-    //this.fetchEmailsFromEs();
   }
 
   selectEmail(id){
