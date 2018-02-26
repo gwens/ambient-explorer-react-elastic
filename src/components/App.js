@@ -45,7 +45,27 @@ class App extends React.Component {
     let query = {"query": {"match_all" : {}}};
     // If a search term has been entered, change the query
     if (searchString) {
-      query = {"query": {"bool": {"should": [{ "match": { "subject": `${searchString}` } }]}}};
+      //query = {"query": {"bool": {"should": [{ "match": { "subject": `${searchString}` } }]}}};
+      query = {
+        "query": {
+          "bool": {
+            "filter": {
+                "range": {
+                  "id": {
+                    "gte": "amb_2000_12",
+                    "lte": "amb_2001_07",
+                    "format": "'amb_'yyyy'_'mm"
+                    }
+                } 
+            },
+            "should": [
+              { "match": { "subject": {"query": `${searchString}`, "boost": 2} } },
+              { "match": { "sender": { "query": `${searchString}`, "boost": 1.5 } } },
+              { "match": { "content": `${searchString}` } }
+            ]
+          }
+        }
+      }
     }
 
     fetch(elasticUrl, {
