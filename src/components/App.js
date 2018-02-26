@@ -10,7 +10,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.fetchEmailsFromEs = this.fetchEmailsFromEs.bind(this);
-    this.fetchEmails = this.fetchEmails.bind(this);
+    //this.fetchEmails = this.fetchEmails.bind(this);
     this.setSearchString = this.setSearchString.bind(this);
     this.setDateFilters = this.setDateFilters.bind(this);
     this.selectEmail = this.selectEmail.bind(this);
@@ -39,11 +39,14 @@ class App extends React.Component {
   }
 
   // Gets emails from elasticsearch and sets them in state
-  fetchEmailsFromEs() {
+  fetchEmailsFromEs(searchString) {
     const elasticUrl = "http://localhost:9200/emails/_search"
-    // Fixed search term for now to get it working
-    const searchTerm = "aphex";
-    let query = {"query": {"bool": {"should": [{ "match": { "subject": `${searchTerm}` } }]}}};
+    // Default query for no search term, returns all documents
+    let query = {"query": {"match_all" : {}}};
+    // If a search term has been entered, change the query
+    if (searchString) {
+      query = {"query": {"bool": {"should": [{ "match": { "subject": `${searchString}` } }]}}};
+    }
 
     fetch(elasticUrl, {
       method: 'POST', 
@@ -67,7 +70,7 @@ class App extends React.Component {
   }
 
   // Gets emails from a remote URL and sets them in state
-  fetchEmails() {
+  /*fetchEmails() {
     fetch('https://api.myjson.com/bins/7crgt', {
       mode: 'cors'
     })
@@ -78,10 +81,11 @@ class App extends React.Component {
         const emails = Object.assign(response);
         this.setState({ emails });
       });
-  }
+  }*/
 
   setSearchString(searchString){
     this.setState({ searchString });
+    this.fetchEmailsFromEs(searchString);
   }
 
   setDateFilters(filters){

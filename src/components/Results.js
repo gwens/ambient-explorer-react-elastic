@@ -4,7 +4,7 @@ import EmailPreview from './EmailPreview';
 class Results extends React.Component {
   constructor() {
     super();
-    this.getSearchResults = this.getSearchResults.bind(this);
+    //this.getSearchResults = this.getSearchResults.bind(this);
     this.filterEmailsByDate = this.filterEmailsByDate.bind(this);
   }
 
@@ -20,7 +20,7 @@ class Results extends React.Component {
     return filteredEmailIds;
   }
 
-  getSearchResultsOld(emailIds) {
+  /*getSearchResultsOld(emailIds) {
     const searchString = this.props.searchString;
     const emails = this.props.emails;
     const searchResults = emailIds.reduce((resultsArr, key) => {
@@ -30,9 +30,9 @@ class Results extends React.Component {
       return resultsArr;
     }, []);
     return searchResults;
-  }
+  }*/
 
-  getSearchResults(emailIds) {
+  /*getSearchResults(emailIds) {
     const emails = this.props.emails;
     const searchString = this.props.searchString.toLowerCase(); // change to case insensitive
     let resultsAll = emailIds.reduce((accumulator, id) => {
@@ -51,8 +51,9 @@ class Results extends React.Component {
     const resultsSorted = resultsAll.sort((a,b) => a.priority > b.priority ? -1 : 1);
     // Map the array of objects back to an array of the IDs only before returning it
     const resultsIds = resultsSorted.map(item => item.id);
+    console.log(resultsIds);
     return resultsIds;
-  }
+  }*/
 
   getPageOfResults(searchResults, maxResults, resultsPage) {
     const totalResults = searchResults.length;
@@ -69,7 +70,8 @@ class Results extends React.Component {
 
   render() {
     const filteredEmailIds = this.filterEmailsByDate();
-    const searchResults = this.getSearchResults(filteredEmailIds);
+    //const searchResults = this.getSearchResults(filteredEmailIds);
+    const searchResults = Object.keys(this.props.emails);
     const maxResults = 25;
     const resultsPage = this.props.resultsPage;
     const numFullPages = Math.floor(searchResults.length / maxResults);
