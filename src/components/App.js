@@ -40,33 +40,35 @@ class App extends React.Component {
 
   // Gets emails from elasticsearch and sets them in state
   fetchEmailsFromEs() {
-    //console.log(searchString);
     const searchString = this.state.searchString;
-    console.log(searchString);
+    const dateFilters = this.state.dateFilters;
     const elasticUrl = "http://localhost:9200/emails/_search"
     // Default query for no search term, returns all documents
-    let query = {"query": {"match_all" : {}}};
-    // If a search term has been entered, change the query
-    if (searchString) {
-      //query = {"query": {"bool": {"should": [{ "match": { "subject": `${searchString}` } }]}}};
-      query = {
-        "query": {
-          "bool": {
-            "filter": {
-                "range": {
-                  "id": {
-                    "gte": `amb_${this.state.dateFilters.yearFrom}_${this.state.dateFilters.monthFrom}`,
-                    "lte": "amb_2001_07",
-                    "format": "'amb_'yyyy'_'mm"
-                    }
-                } 
-            },
-            "should": [
-              { "match": { "subject": {"query": `${searchString}`, "boost": 2} } },
-              { "match": { "sender": { "query": `${searchString}`, "boost": 1.5 } } },
-              { "match": { "content": `${searchString}` } }
-            ]
-          }
+
+    // Partial query for matching all if no search term
+    const matchAll = [{"match_all" : {}}];
+    // Full query for matching a string if a search term exists
+    const matchString = [
+      { "match": { "subject": {"query": `${searchString}`, "boost": 2} } },
+      { "match": { "sender": { "query": `${searchString}`, "boost": 1.5 } } },
+      { "match": { "content": `${searchString}` } }
+    ];
+    const matchQuery = searchString ? matchString : matchAll;
+
+    // Combined elasticsearch 
+    const query = {
+      "query": {
+        "bool": {
+          "filter": {
+              "range": {
+                "id": {
+                  "gte": `amb_${dateFilters.yearFrom}_${dateFilters.monthFrom}`,
+                  "lte": "amb_2001_07",
+                  "format": "'amb_'yyyy'_'mm"
+                  }
+              } 
+          },
+          "should": matchQuery
         }
       }
     }
@@ -108,7 +110,7 @@ class App extends React.Component {
 
   setSearchString(searchString){
     // Fetch new emails as a callback once setState is finished
-    this.setState({ searchString }, () => {this.fetchEmailsFromEs()});
+    this.setState({ searchString }, () => { this.fetchEmailsFromEs() });
   }
 
   setDateFilters(filters){
@@ -118,7 +120,7 @@ class App extends React.Component {
     //this.setState({ dateFilters });
     // Replacing spread with Object.assign (works as object is only one level deep)
     const dateFilters = Object.assign({}, filters);
-    this.setState({ dateFilters });
+    this.setState({ dateFilters }, () => { this.fetchEmailsFromEs() });
     //this.fetchEmailsFromEs();
   }
 
