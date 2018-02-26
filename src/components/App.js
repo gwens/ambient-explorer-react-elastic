@@ -57,13 +57,14 @@ class App extends React.Component {
 
     // Combined elasticsearch 
     const query = {
+      "size": 1000,
       "query": {
         "bool": {
           "filter": {
               "range": {
                 "id": {
                   "gte": `amb_${dateFilters.yearFrom}_${dateFilters.monthFrom}`,
-                  "lte": "amb_2001_07",
+                  "lte": `amb_${dateFilters.yearTo}_${dateFilters.monthTo}`,
                   "format": "'amb_'yyyy'_'mm"
                   }
               } 

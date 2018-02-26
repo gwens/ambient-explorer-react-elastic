@@ -5,10 +5,10 @@ class Results extends React.Component {
   constructor() {
     super();
     //this.getSearchResults = this.getSearchResults.bind(this);
-    this.filterEmailsByDate = this.filterEmailsByDate.bind(this);
+    //this.filterEmailsByDate = this.filterEmailsByDate.bind(this);
   }
 
-  filterEmailsByDate() {
+  /*filterEmailsByDate() {
     const emails = this.props.emails;
     const emailIds = Object.keys(emails);
     const dateFilters = this.props.dateFilters;
@@ -18,7 +18,7 @@ class Results extends React.Component {
     // Sort the emails into chronological order, oldest first
     filteredEmailIds.sort((a, b) => a > b ? 1 : -1);
     return filteredEmailIds;
-  }
+  }*/
 
   /*getSearchResultsOld(emailIds) {
     const searchString = this.props.searchString;
@@ -69,7 +69,7 @@ class Results extends React.Component {
   }
 
   render() {
-    const filteredEmailIds = this.filterEmailsByDate();
+    //const filteredEmailIds = this.filterEmailsByDate();
     //const searchResults = this.getSearchResults(filteredEmailIds);
     const searchResults = Object.keys(this.props.emails);
     const maxResults = 25;
