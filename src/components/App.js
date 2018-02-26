@@ -49,7 +49,7 @@ class App extends React.Component {
     ];
     const matchQuery = searchString ? matchString : matchAll;
 
-    // Combined elasticsearch 
+    // Combined elasticsearch with date filters, max 1000 results returned
     const query = {
       "size": 1000,
       "query": {
@@ -91,7 +91,11 @@ class App extends React.Component {
 
   setSearchString(searchString){
     // Fetch new emails as a callback once setState is finished
-    this.setState({ searchString }, () => { this.fetchEmailsFromEs() });
+    this.setState({ searchString }, () => { 
+      this.fetchEmailsFromEs() 
+      // Reset to page 1 for new search results
+      this.setPage(1)
+    });
   }
 
   setDateFilters(filters){
@@ -101,12 +105,11 @@ class App extends React.Component {
     //this.setState({ dateFilters });
     // Replacing spread with Object.assign (works as object is only one level deep)
     const dateFilters = Object.assign({}, filters);
+    // Fetch emails as callback only once date filters are set
     this.setState({ dateFilters }, () => { this.fetchEmailsFromEs() });
   }
 
   selectEmail(id){
-    //let selectedEmail = {};
-    //selectedEmail[id] = emails[id];
     this.setState({ selectedEmail: id });
   }
 
