@@ -141,7 +141,7 @@ class App extends React.Component {
 
   prevPage(){
     let resultsPage = this.state.resultsPage;
-    resultsPage = resultsPage === 1 ? 1 : resultsPage - 1 // Try putting this logic here for now, but might want them both in the same place
+    resultsPage--;
     this.setState( { resultsPage }, () => { this.fetchEmailsFromEs() });
   }
 
