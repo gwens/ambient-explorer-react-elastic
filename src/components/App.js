@@ -17,6 +17,7 @@ class App extends React.Component {
     this.setPage = this.setPage.bind(this);
     // Get initial state
     this.state = {
+      hits: 0,
       emails: {},
       searchString: "",
       dateFilters: {
@@ -52,9 +53,13 @@ class App extends React.Component {
       }}];
     const matchQuery = searchString.length > 2 ? matchString : matchAll;
 
+    // Pagination
+    const from = (this.state.resultsPage - 1) * 25
+
     // Combined elasticsearch with date filters, max 1000 results returned
     const query = {
-      "size": 100,
+      "from": from,
+      "size": 25,
       "sort": [ 
         {"_score": {"order": "desc"}},
         {"id.raw": {"order": "asc"}} 
@@ -84,7 +89,7 @@ class App extends React.Component {
     }).then(res => res.json())
     .catch(error => console.error('Error:', error))
     .then(response => {
-      console.log(response);
+      console.log(response.hits.total);
       let results = {};
       response.hits.hits.map(hit => {
         let email = hit._source;
@@ -93,6 +98,9 @@ class App extends React.Component {
         results[`${id}`] = email;
       });
       const emails = Object.assign(results);
+      // Record the total hits, to control pagination
+      this.setState({ hits: response.hits.total });
+      // And set the emails into state
       this.setState({ emails });
     });
   }
@@ -128,19 +136,19 @@ class App extends React.Component {
   nextPage(){
     let resultsPage = this.state.resultsPage;
     resultsPage++; // Need to figure out if you're on the last page or not, but do this in Results
-    this.setState( { resultsPage });
+    this.setState( { resultsPage }, () => { this.fetchEmailsFromEs() });
   }
 
   prevPage(){
     let resultsPage = this.state.resultsPage;
     resultsPage = resultsPage === 1 ? 1 : resultsPage - 1 // Try putting this logic here for now, but might want them both in the same place
-    this.setState( { resultsPage });
+    this.setState( { resultsPage }, () => { this.fetchEmailsFromEs() });
   }
 
   setPage(x) {
     let resultsPage = this.state.resultsPage;
     resultsPage = x;
-    this.setState( { resultsPage });
+    this.setState( { resultsPage }, () => { this.fetchEmailsFromEs() });
   }
 
   render() {
@@ -148,7 +156,7 @@ class App extends React.Component {
       <div className="navigator">
         <Header />
         <SearchBar setSearchString={this.setSearchString} dateFilters={this.state.dateFilters} setDateFilters={this.setDateFilters} clearEmailSelection={this.clearEmailSelection} setPage={this.setPage}/>
-        <Results emails={this.state.emails} dateFilters={this.state.dateFilters} searchString={this.state.searchString} selectEmail={this.selectEmail} resultsPage={this.state.resultsPage} nextPage={this.nextPage} prevPage={this.prevPage}/>
+        <Results emails={this.state.emails} dateFilters={this.state.dateFilters} searchString={this.state.searchString} selectEmail={this.selectEmail} resultsPage={this.state.resultsPage} nextPage={this.nextPage} prevPage={this.prevPage} hits={this.state.hits}/>
         <Viewer selectedEmail={this.state.emails[this.state.selectedEmail]} searchString={this.state.searchString}/>
       </div>
     )
