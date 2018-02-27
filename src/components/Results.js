@@ -26,8 +26,10 @@ class Results extends React.Component {
     
     // Could put sorting logic here
     // Map the emails to an array then sort that
-    /*const sortedResults = Object.keys(this.props.emails).map(key => this.props.emails[key]);
-    console.log(sortedResults);*/
+    const sortedResults = Object.keys(this.props.emails).map(key => this.props.emails[key]);
+    const sortedByDate = sortedResults.sort((a, b) => ((a.id.slice(4,11) < b.id.slice(4,11)) 
+      || (a.id.slice(4,11) === b.id.slice(4,11) && parseInt(a.id.slice(12)) < parseInt(b.id.slice(12))) ? -1 : 1));
+    console.log(sortedByDate);
 
     const maxResults = 25;
     const resultsPage = this.props.resultsPage;
