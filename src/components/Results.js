@@ -23,6 +23,12 @@ class Results extends React.Component {
   render() {
     // Search results are handled as an array of ids
     const searchResults = Object.keys(this.props.emails);
+    
+    // Could put sorting logic here
+    // Map the emails to an array then sort that
+    /*const sortedResults = Object.keys(this.props.emails).map(key => this.props.emails[key]);
+    console.log(sortedResults);*/
+
     const maxResults = 25;
     const resultsPage = this.props.resultsPage;
     const numFullPages = Math.floor(searchResults.length / maxResults);
