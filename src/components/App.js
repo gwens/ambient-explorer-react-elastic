@@ -52,12 +52,13 @@ class App extends React.Component {
           { "match": { "content": `${searchString}` } }
         ]
       }}];
+    // Start checking for matches once the string is at least 3 characters long
     const matchQuery = searchString.length > 2 ? matchString : matchAll;
 
     // Pagination
     const from = (this.state.currentPage - 1) * this.resultsPerPage;
 
-    // Combined elasticsearch with date filters, max 1000 results returned
+    // Combined elasticsearch query with date filters, sorting and pagination
     const query = {
       "from": from,
       "size": this.resultsPerPage,
