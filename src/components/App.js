@@ -36,22 +36,29 @@ class App extends React.Component {
   fetchEmailsFromEs() {
     const searchString = this.state.searchString;
     const dateFilters = this.state.dateFilters;
-    const elasticUrl = "http://localhost:9200/fresh/_search"
+    const elasticUrl = "http://localhost:9200/emails/_search"
     // Default query for no search term, returns all documents
 
     // Partial query for matching all if no search term
     const matchAll = [{"match_all" : {}}];
     // Full query for matching a string if a search term exists
     const matchString = [
-      { "match": { "subject": {"query": `${searchString}`, "boost": 2} } },
-      { "match": { "sender": { "query": `${searchString}`, "boost": 1.5 } } },
-      { "match": { "content": `${searchString}` } }
-    ];
-    const matchQuery = searchString ? matchString : matchAll;
+      { "bool": {
+        "should": [
+          { "match": { "subject": {"query": `${searchString}`, "boost": 2} } },
+          { "match": { "sender": { "query": `${searchString}`, "boost": 1.5 } } },
+          { "match": { "content": `${searchString}` } }
+        ]
+      }}];
+    const matchQuery = searchString.length > 2 ? matchString : matchAll;
 
     // Combined elasticsearch with date filters, max 1000 results returned
     const query = {
-      "size": 1000,
+      "size": 100,
+      "sort": [ 
+        {"_score": {"order": "desc"}},
+        {"id.raw": {"order": "asc"}} 
+      ],
       "query": {
         "bool": {
           "filter": {
@@ -63,7 +70,7 @@ class App extends React.Component {
                   }
               } 
           },
-          "should": matchQuery
+          "must": matchQuery
         }
       }
     }
@@ -77,6 +84,7 @@ class App extends React.Component {
     }).then(res => res.json())
     .catch(error => console.error('Error:', error))
     .then(response => {
+      console.log(response);
       let results = {};
       response.hits.hits.map(hit => {
         let email = hit._source;
