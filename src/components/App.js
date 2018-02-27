@@ -30,6 +30,7 @@ class App extends React.Component {
       currentPage: 1
     };
     // Get emails from elasticsearch
+    this.resultsPerPage = 25;
     this.fetchEmailsFromEs();
   }
 
@@ -54,12 +55,12 @@ class App extends React.Component {
     const matchQuery = searchString.length > 2 ? matchString : matchAll;
 
     // Pagination
-    const from = (this.state.currentPage - 1) * 25
+    const from = (this.state.currentPage - 1) * this.resultsPerPage;
 
     // Combined elasticsearch with date filters, max 1000 results returned
     const query = {
       "from": from,
-      "size": 25,
+      "size": this.resultsPerPage,
       "sort": [ 
         {"_score": {"order": "desc"}},
         {"id.raw": {"order": "asc"}} 
@@ -89,7 +90,6 @@ class App extends React.Component {
     }).then(res => res.json())
     .catch(error => console.error('Error:', error))
     .then(response => {
-      console.log(response.hits.total);
       let results = {};
       response.hits.hits.map(hit => {
         let email = hit._source;
@@ -156,7 +156,7 @@ class App extends React.Component {
       <div className="navigator">
         <Header />
         <SearchBar setSearchString={this.setSearchString} dateFilters={this.state.dateFilters} setDateFilters={this.setDateFilters} clearEmailSelection={this.clearEmailSelection} setPage={this.setPage}/>
-        <Results emails={this.state.emails} dateFilters={this.state.dateFilters} searchString={this.state.searchString} selectEmail={this.selectEmail} currentPage={this.state.currentPage} nextPage={this.nextPage} prevPage={this.prevPage} hits={this.state.hits}/>
+        <Results emails={this.state.emails} selectEmail={this.selectEmail} currentPage={this.state.currentPage} nextPage={this.nextPage} prevPage={this.prevPage} hits={this.state.hits} resultsPerPage={this.resultsPerPage}/>
         <Viewer selectedEmail={this.state.emails[this.state.selectedEmail]} searchString={this.state.searchString}/>
       </div>
     )

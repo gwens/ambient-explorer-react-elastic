@@ -5,10 +5,8 @@ class Results extends React.Component {
   render() {
     // Search results are handled as an array of ids
     const results = Object.keys(this.props.emails);
-    
-    const maxResults = 25; // duplication
     const currentPage = this.props.currentPage;
-    const numPages = Math.ceil(this.props.hits / maxResults);
+    const numPages = Math.ceil(this.props.hits / this.props.resultsPerPage);
     return (
       <div className="results">
         <button onClick={this.props.prevPage} disabled={currentPage === 1}>&#8249;&#8249;</button>
