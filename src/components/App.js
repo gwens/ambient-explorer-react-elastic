@@ -36,7 +36,7 @@ class App extends React.Component {
   fetchEmailsFromEs() {
     const searchString = this.state.searchString;
     const dateFilters = this.state.dateFilters;
-    const elasticUrl = "http://localhost:9200/emails/_search"
+    const elasticUrl = "http://localhost:9200/fresh/_search"
     // Default query for no search term, returns all documents
 
     // Partial query for matching all if no search term
