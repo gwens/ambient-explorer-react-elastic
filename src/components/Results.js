@@ -7,13 +7,13 @@ class Results extends React.Component {
     const results = Object.keys(this.props.emails);
     
     const maxResults = 25; // duplication
-    const resultsPage = this.props.resultsPage;
+    const currentPage = this.props.currentPage;
     const numPages = Math.ceil(this.props.hits / maxResults);
     return (
       <div className="results">
-        <button onClick={this.props.prevPage} disabled={resultsPage === 1}>&#8249;&#8249;</button>
-        <span>page: {resultsPage}</span>
-        <button onClick={resultsPage < numPages ? this.props.nextPage : null} disabled={resultsPage === numPages}>&#8250;&#8250;</button>
+        <button onClick={this.props.prevPage} disabled={currentPage === 1}>&#8249;&#8249;</button>
+        <span>page: {currentPage}</span>
+        <button onClick={currentPage < numPages ? this.props.nextPage : null} disabled={currentPage === numPages}>&#8250;&#8250;</button>
         <ul>
           {
             results

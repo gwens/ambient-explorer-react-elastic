@@ -27,7 +27,7 @@ class App extends React.Component {
         monthTo: "12"
       },
       selectedEmail: null, // Holds the email to be displayed in the viewer
-      resultsPage: 1
+      currentPage: 1
     };
     // Get emails from elasticsearch
     this.fetchEmailsFromEs();
@@ -54,7 +54,7 @@ class App extends React.Component {
     const matchQuery = searchString.length > 2 ? matchString : matchAll;
 
     // Pagination
-    const from = (this.state.resultsPage - 1) * 25
+    const from = (this.state.currentPage - 1) * 25
 
     // Combined elasticsearch with date filters, max 1000 results returned
     const query = {
@@ -134,21 +134,21 @@ class App extends React.Component {
   }
 
   nextPage(){
-    let resultsPage = this.state.resultsPage;
-    resultsPage++; // Need to figure out if you're on the last page or not, but do this in Results
-    this.setState( { resultsPage }, () => { this.fetchEmailsFromEs() });
+    let currentPage = this.state.currentPage;
+    currentPage++; // Need to figure out if you're on the last page or not, but do this in Results
+    this.setState( { currentPage }, () => { this.fetchEmailsFromEs() });
   }
 
   prevPage(){
-    let resultsPage = this.state.resultsPage;
-    resultsPage--;
-    this.setState( { resultsPage }, () => { this.fetchEmailsFromEs() });
+    let currentPage = this.state.currentPage;
+    currentPage--;
+    this.setState( { currentPage }, () => { this.fetchEmailsFromEs() });
   }
 
   setPage(x) {
-    let resultsPage = this.state.resultsPage;
-    resultsPage = x;
-    this.setState( { resultsPage }, () => { this.fetchEmailsFromEs() });
+    let currentPage = this.state.currentPage;
+    currentPage = x;
+    this.setState( { currentPage }, () => { this.fetchEmailsFromEs() });
   }
 
   render() {
@@ -156,7 +156,7 @@ class App extends React.Component {
       <div className="navigator">
         <Header />
         <SearchBar setSearchString={this.setSearchString} dateFilters={this.state.dateFilters} setDateFilters={this.setDateFilters} clearEmailSelection={this.clearEmailSelection} setPage={this.setPage}/>
-        <Results emails={this.state.emails} dateFilters={this.state.dateFilters} searchString={this.state.searchString} selectEmail={this.selectEmail} resultsPage={this.state.resultsPage} nextPage={this.nextPage} prevPage={this.prevPage} hits={this.state.hits}/>
+        <Results emails={this.state.emails} dateFilters={this.state.dateFilters} searchString={this.state.searchString} selectEmail={this.selectEmail} currentPage={this.state.currentPage} nextPage={this.nextPage} prevPage={this.prevPage} hits={this.state.hits}/>
         <Viewer selectedEmail={this.state.emails[this.state.selectedEmail]} searchString={this.state.searchString}/>
       </div>
     )
