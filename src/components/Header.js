@@ -1,9 +1,10 @@
 import React from 'react';
+import Wave from '../images/wave-icon.png';
 
 const Header = () => {
   return (
     <header>
-      <img className="icon" src="../images/wave-icon.png" alt="sound wave" />
+      <img className="icon" src={Wave} alt="sound wave" />
     </header>
   )
 }
