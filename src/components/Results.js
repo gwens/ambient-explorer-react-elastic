@@ -9,9 +9,11 @@ class Results extends React.Component {
     const numPages = Math.ceil(this.props.hits / this.props.resultsPerPage);
     return (
       <div className="results">
-        <button onClick={this.props.prevPage} disabled={currentPage === 1}>&#8249;&#8249;</button>
-        <span>page: {currentPage}</span>
-        <button onClick={currentPage < numPages ? this.props.nextPage : null} disabled={currentPage === numPages}>&#8250;&#8250;</button>
+        <div className="results-controls">
+          <button onClick={this.props.prevPage} disabled={currentPage === 1}>&#8249;&#8249;</button>
+          <span>page: {currentPage}</span>
+          <button onClick={currentPage < numPages ? this.props.nextPage : null} disabled={currentPage === numPages}>&#8250;&#8250;</button>
+        </div>
         <ul>
           {
             results

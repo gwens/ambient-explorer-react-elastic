@@ -9,9 +9,11 @@ class Viewer extends React.Component {
       const contentHl = searchString ? selectedEmail.content.replace(regex, `<span class="hl">${searchString}</span>`) : selectedEmail.content ;
       return (
         <div className="viewer">
-          <div>Date: {selectedEmail.dateString}</div>
-          <div>From: {selectedEmail.from}</div>
-          <div>Subject: {selectedEmail.subject}</div>
+          <div className="viewer-header">
+            <div>Date: {selectedEmail.dateString}</div>
+            <div>From: {selectedEmail.from}</div>
+            <div>Subject: {selectedEmail.subject}</div>
+          </div>
           <div dangerouslySetInnerHTML={{ __html: contentHl }} />
         </div>
       )
