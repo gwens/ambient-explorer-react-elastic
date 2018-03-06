@@ -18,11 +18,12 @@ div {
 body {
   background-image: url('../images/grey-sea_40.jpg');
   background-repeat: no-repeat; 
+  background-size: cover;
   background-attachment: fixed;  
   margin: 0;
 }
 
-#main {
+#root {
   display: flex;
   justify-content: center;
   align-items: flex-start;
