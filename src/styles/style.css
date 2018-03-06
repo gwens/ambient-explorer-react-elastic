@@ -1,6 +1,6 @@
 html {
   box-sizing: border-box;
-  background-image: url('../images/pexels-photo-66768.jpg');
+  background-image: url('../images/lj_marsh.jpg');
   background-repeat: no-repeat; 
   background-size: cover;
   font-family:'courier new';
@@ -19,7 +19,6 @@ div {
 }
 
 body {
-
   margin: 0;
   overflow: scroll;
 }
