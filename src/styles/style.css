@@ -112,6 +112,10 @@ label {
   font-size: 18px;
 }
 
+li.selected  {
+  background-color: rgba(50,70,50,0.8);
+}
+
 .results .sender {
   color: lightgray;
 }
