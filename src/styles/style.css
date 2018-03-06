@@ -1,10 +1,13 @@
 html {
   box-sizing: border-box;
-  background:white;
+  background-image: url('../images/pexels-photo-66768.jpg');
+  background-repeat: no-repeat; 
+  background-size: cover;
   font-family:'courier new';
   font-size: 20px;
   font-weight: 200;
   color: seagreen;
+  overflow: hidden;
 }
 
 *, *:before, *:after {
@@ -16,11 +19,9 @@ div {
 }
 
 body {
-  background-image: url('../images/grey-sea_40.jpg');
-  background-repeat: no-repeat; 
-  background-size: cover;
-  background-attachment: fixed;  
+
   margin: 0;
+  overflow: scroll;
 }
 
 #root {
