@@ -13,7 +13,10 @@ class SearchBar extends React.Component {
   render() {
     return (
         <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
-          <input onChange={(e) => this.submitSearch(e)} ref={(input) => this.searchString = input} type="text" className="search" placeholder="search me..."/>
+          <input onChange={(e) => this.submitSearch(e)} ref={(input) => this.searchString = input} type="text" className="search" placeholder="Search me..."/>
+          <label>Subject:<input type="checkbox" checked="checked"/></label>
+          <label>Sender:<input type="checkbox" checked="checked"/></label>
+          <label>Content:<input type="checkbox" checked="checked"/></label>
           <DateRangePicker dateFilters={this.props.dateFilters} setDateFilters={this.props.setDateFilters} setPage={this.props.setPage}/>
         </form>
     )

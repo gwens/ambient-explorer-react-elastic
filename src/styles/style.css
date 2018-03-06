@@ -6,7 +6,7 @@ html {
   font-family:'courier new';
   font-size: 20px;
   font-weight: 200;
-  color: seagreen;
+  color:seashell;
   overflow: hidden;
 }
 
@@ -21,6 +21,7 @@ div {
 body {
   margin: 0;
   overflow: scroll;
+  
 }
 
 #root {
@@ -41,11 +42,41 @@ body {
 .search-bar {
   flex-basis: 100%; /* flex-item */
   display: flex; /* flex-container */
+  align-items: baseline;
   margin: 40px 0;
+  color: black;
+  font-size: 16px;
+}
+
+input {
+  border-radius: 3px;
+  border: 1px solid black;
+  padding: 5px;
+  height: 20px;
+}
+
+input[type='checkbox']{
+  margin-bottom: 0;
+  vertical-align: bottom;
+}
+
+select {
+  border-radius: 3px;
+  border: 1px solid black;
+  margin-right: 5px;
+  height: 20px;
+}
+
+label {
+  display: inline-block;
+  padding-left: 15px;
+  margin-bottom: 0;
 }
 
 .results {
   flex: 1;
+  border-radius: 10px;
+  background-color: rgba(0,0,0,0.4);
 }
 
 .results ul {
@@ -54,8 +85,17 @@ body {
   padding: 0;
 }
 
+.results li {
+  border-radius: 5px;
+  border-bottom: 1px solid black;
+  padding: 5px;
+}
+
 .viewer {
   flex: 2;
+  border-radius: 10px;
+  background-color: rgba(256,256,256,0.4);
+  color: black;
 }
 
 header .icon {
