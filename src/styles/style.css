@@ -106,18 +106,24 @@ label {
 }
 
 .results li {
-  border-radius: 10px;
+  /*border-radius: 10px;*/
   border-bottom: 1px solid black;
-  padding: 5px;
+  padding: 10px;
   font-size: 18px;
 }
 
+.results li:last-child {
+  border-radius: 10px;
+}
+
 li.selected  {
-  background-color: rgba(50,70,50,0.8);
+  background-color: rgba(50,70,50,0.5);
+  font-weight: bold;
 }
 
 .results .sender {
   color: lightgray;
+  font-size: 16px;
 }
 
 .viewer {
