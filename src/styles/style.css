@@ -135,7 +135,6 @@ li.selected  {
   padding: 30px;
   background-color: rgba(256,256,256,0.4);
   color: black;
-  transition: 2s;
 }
 
 /* Back to search results - only visible on small screens */
@@ -171,7 +170,7 @@ header .icon {
 
 /* highlighted text */
 .hl {
-  background: rgba(207, 226, 33, 0.274);
+  background: rgba(200, 250, 0, 0.15);
 }
 
 /* Small screens */
