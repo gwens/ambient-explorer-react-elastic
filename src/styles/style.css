@@ -283,6 +283,7 @@ header .icon {
   .search-bar {
     width: 1200px;
     justify-content: space-between;
+    font-size: 18px;
   }
 
   .results {
