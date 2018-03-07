@@ -14,6 +14,7 @@ class Results extends React.Component {
           <span>page: {currentPage}</span>
           <button onClick={currentPage < numPages ? this.props.nextPage : null} disabled={currentPage === numPages}>&#8250;&#8250;</button>
         </div>
+        <div className={this.props.loading ? "loader" : "loader disabled"}></div>
         <ul>
           {
             results

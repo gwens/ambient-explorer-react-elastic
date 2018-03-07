@@ -34,7 +34,8 @@ class App extends React.Component {
       },
       sortOrder: "oldest",
       selectedEmail: null, // Holds the email to be displayed in the viewer
-      currentPage: 1
+      currentPage: 1,
+      loading: true
     };
     // Get emails from elasticsearch
     this.resultsPerPage = 25;
@@ -121,7 +122,8 @@ class App extends React.Component {
       // Record the total hits, to control pagination
       this.setState({ hits: response.hits.total });
       // And set the emails into state
-      this.setState({ emails });
+      this.setState({ emails }, () => { this.setState({ loading: false}) });
+      // Stop the spinner
     });
   }
 
@@ -142,7 +144,9 @@ class App extends React.Component {
   toggleSearchFilters(filter){
     const currentFilters = this.state.searchFilters;
     currentFilters[filter] = !currentFilters[filter];
-    this.setState( { searchFilters: currentFilters }, () => { this.fetchEmailsFromEs() });
+    this.setState( { searchFilters: currentFilters }, () => { 
+      this.setState( { loading: true } );
+      this.fetchEmailsFromEs() });
   }
 
   setDateFilters(filters){
@@ -153,11 +157,15 @@ class App extends React.Component {
     // Replacing spread with Object.assign (works as object is only one level deep)
     const dateFilters = Object.assign({}, filters);
     // Fetch emails as callback only once date filters are set
-    this.setState({ dateFilters, currentPage: 1 }, () => { this.fetchEmailsFromEs() });
+    this.setState({ dateFilters, currentPage: 1 }, () => { 
+      this.setState( { loading: true } );
+      this.fetchEmailsFromEs() });
   }
 
   setSortOrder(option){
-    this.setState({ sortOrder: option }, () => { this.fetchEmailsFromEs() });
+    this.setState({ sortOrder: option }, () => { 
+      this.setState( { loading: true } );
+      this.fetchEmailsFromEs() });
   }
 
   selectEmail(id){
@@ -171,13 +179,17 @@ class App extends React.Component {
   nextPage(){
     let currentPage = this.state.currentPage;
     currentPage++; // Need to figure out if you're on the last page or not, but do this in Results
-    this.setState( { currentPage }, () => { this.fetchEmailsFromEs() });
+    this.setState( { currentPage }, () => { 
+      this.setState( { loading: true } );
+      this.fetchEmailsFromEs() });
   }
 
   prevPage(){
     let currentPage = this.state.currentPage;
     currentPage--;
-    this.setState( { currentPage }, () => { this.fetchEmailsFromEs() });
+    this.setState( { currentPage }, () => { 
+      this.setState( { loading: true } );
+      this.fetchEmailsFromEs() });
   }
 
   render() {
@@ -186,7 +198,7 @@ class App extends React.Component {
         <Header />
         <SearchBar setSearchString={this.setSearchString} dateFilters={this.state.dateFilters} setDateFilters={this.setDateFilters} toggleSearchFilters={this.toggleSearchFilters} searchFilters={this.state.searchFilters} sortOrder={this.state.sortOrder} setSortOrder={this.setSortOrder} clearEmailSelection={this.clearEmailSelection} searchString={this.state.searchString}/>
         <div className="main-container">
-          <Results emails={this.state.emails} selectEmail={this.selectEmail} selectedEmail={this.state.selectedEmail} currentPage={this.state.currentPage} nextPage={this.nextPage} prevPage={this.prevPage} hits={this.state.hits} resultsPerPage={this.resultsPerPage}/>
+          <Results emails={this.state.emails} selectEmail={this.selectEmail} selectedEmail={this.state.selectedEmail} currentPage={this.state.currentPage} nextPage={this.nextPage} prevPage={this.prevPage} hits={this.state.hits} resultsPerPage={this.resultsPerPage} loading={this.state.loading} />
           <Viewer selectedEmail={this.state.emails[this.state.selectedEmail]} clearEmailSelection={this.clearEmailSelection} searchString={this.state.searchString}/>
         </div>
       </div>
