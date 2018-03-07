@@ -28,14 +28,14 @@ class SearchBar extends React.Component {
     const { searchFilters, sortOrder } = this.props;
     return (
         <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
-          <input onChange={(e) => this.submitSearch(e)} ref={(input) => this.searchString = input} type="text" className="search" placeholder="Search..."/>
-          <div>
+          <input className="search-elem" onChange={(e) => this.submitSearch(e)} ref={(input) => this.searchString = input} type="text" className="search" placeholder="Search..."/>
+          <div className="search-elem" >
             <label><input onChange={(e) => this.handleCheck(e)} type="checkbox" value="subject" checked={searchFilters.subject}/>subject</label>
             <label><input onChange={(e) => this.handleCheck(e)} type="checkbox" value="sender" checked={searchFilters.sender}/>sender</label>
             <label><input onChange={(e) => this.handleCheck(e)} type="checkbox" value="content" checked={searchFilters.content}/>content</label>
           </div>
           <DateRangePicker dateFilters={this.props.dateFilters} setDateFilters={this.props.setDateFilters} />
-          <div>Sort by:
+          <div className="search-elem">Sort by:
             
             <input onChange={(e) => this.updateSelection(e)} type="radio" id="sortByOldest" name="sortOrder" value="oldest" checked={sortOrder == "oldest" ? true : false} />
             <label htmlFor="sortByOldest">oldest</label>

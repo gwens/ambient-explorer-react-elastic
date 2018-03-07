@@ -37,7 +37,7 @@ class DateRangePicker extends React.Component {
     const years = [];
     for (let i = 1994; i <= 2017; i++){ years.push(i.toString())};
     return (
-      <div>
+      <div className="search-elem">
         <label>From:
         <select onChange={(e) => this.updateDateFilters(e)} ref={(input) => this.monthFrom = input} defaultValue="01">
           {

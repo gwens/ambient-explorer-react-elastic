@@ -34,9 +34,13 @@ body {
   align-items: baseline;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin: 10px 0 35px 0;
+  margin: 10px 0 20px 0;
   color: black;
   font-size: 16px;
+}
+
+.search-elem {
+  padding: 5px 0;
 }
 
 .search {
@@ -179,6 +183,11 @@ header .icon {
   .search-bar {
     justify-content: flex-start;
     flex-wrap: wrap;
+    margin: 0;
+  }
+
+  .search-elem {
+    padding: 5px;
   }
 
   .results {
@@ -188,14 +197,18 @@ header .icon {
   }
 
   .results li {
-    border-radius: 0;
     word-wrap: break-word;
+  }
+
+  .results li:last-child {
+    border-radius: 0;
   }
 
   .viewer {
     width: 100%;
     padding: 20px;
     margin: 0;
+    border-radius: 0;
     white-space: wrap;
     overflow: hidden;
     word-wrap: break-word;
