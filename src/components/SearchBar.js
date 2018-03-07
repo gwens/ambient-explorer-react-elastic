@@ -15,7 +15,7 @@ class SearchBar extends React.Component {
   }
 
   render() {
-    const { searchFilters } = this.props;
+    const { searchFilters, sortOrder } = this.props;
     return (
         <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
           <input onChange={(e) => this.submitSearch(e)} ref={(input) => this.searchString = input} type="text" className="search" placeholder="Search me..."/>
@@ -25,15 +25,15 @@ class SearchBar extends React.Component {
           <DateRangePicker dateFilters={this.props.dateFilters} setDateFilters={this.props.setDateFilters} setPage={this.props.setPage}/>
           Sort by:
           <div>
-          <input type="radio" id="sortByOldest" name="sortOrder" value="oldest first" />
+          <input type="radio" id="sortByOldest" name="sortOrder" value="oldest" checked={sortOrder == "oldest" ? true : false} />
           <label htmlFor="sortByOldest">oldest</label>
           </div>
           <div>
-          <input type="radio" id="sortByNewest" name="sortOrder" value="newest first" />
+          <input type="radio" id="sortByNewest" name="sortOrder" value="newest" checked={sortOrder == "newest" ? true : false} />
           <label htmlFor="sortByNewest">newest</label>
           </div>
           <div>
-          <input type="radio" id="sortByRelevance" name="sortOrder" value="relevance" />
+          <input type="radio" id="sortByRelevance" name="sortOrder" value="relevance" checked={sortOrder == "relevance" ? true : false} />
           <label htmlFor="sortByRelevance">relevance</label>
           </div>
         </form>

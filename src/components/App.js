@@ -32,6 +32,7 @@ class App extends React.Component {
         monthFrom: "01",
         monthTo: "12"
       },
+      sortOrder: "newest",
       selectedEmail: null, // Holds the email to be displayed in the viewer
       currentPage: 1
     };
@@ -173,7 +174,7 @@ class App extends React.Component {
     return (
       <div className="navigator">
         <Header />
-        <SearchBar setSearchString={this.setSearchString} dateFilters={this.state.dateFilters} setDateFilters={this.setDateFilters} toggleSearchFilters={this.toggleSearchFilters} searchFilters={this.state.searchFilters} clearEmailSelection={this.clearEmailSelection} setPage={this.setPage}/>
+        <SearchBar setSearchString={this.setSearchString} dateFilters={this.state.dateFilters} setDateFilters={this.setDateFilters} toggleSearchFilters={this.toggleSearchFilters} searchFilters={this.state.searchFilters} sortOrder={this.state.sortOrder} clearEmailSelection={this.clearEmailSelection} setPage={this.setPage}/>
         <div className="main-container">
           <Results emails={this.state.emails} selectEmail={this.selectEmail} selectedEmail={this.state.selectedEmail} currentPage={this.state.currentPage} nextPage={this.nextPage} prevPage={this.prevPage} hits={this.state.hits} resultsPerPage={this.resultsPerPage}/>
           <Viewer selectedEmail={this.state.emails[this.state.selectedEmail]} searchString={this.state.searchString}/>
