@@ -14,6 +14,10 @@ class SearchBar extends React.Component {
     this.props.toggleSearchFilters(event.target.value);
   }
 
+  updateSelection(event) {
+    this.props.setSortOrder(event.target.value);
+  }
+
   render() {
     const { searchFilters, sortOrder } = this.props;
     return (
@@ -25,15 +29,15 @@ class SearchBar extends React.Component {
           <DateRangePicker dateFilters={this.props.dateFilters} setDateFilters={this.props.setDateFilters} setPage={this.props.setPage}/>
           Sort by:
           <div>
-          <input type="radio" id="sortByOldest" name="sortOrder" value="oldest" checked={sortOrder == "oldest" ? true : false} />
+          <input onChange={(e) => this.updateSelection(e)} type="radio" id="sortByOldest" name="sortOrder" value="oldest" checked={sortOrder == "oldest" ? true : false} />
           <label htmlFor="sortByOldest">oldest</label>
           </div>
           <div>
-          <input type="radio" id="sortByNewest" name="sortOrder" value="newest" checked={sortOrder == "newest" ? true : false} />
+          <input onChange={(e) => this.updateSelection(e)} type="radio" id="sortByNewest" name="sortOrder" value="newest" checked={sortOrder == "newest" ? true : false} />
           <label htmlFor="sortByNewest">newest</label>
           </div>
           <div>
-          <input type="radio" id="sortByRelevance" name="sortOrder" value="relevance" checked={sortOrder == "relevance" ? true : false} />
+          <input onChange={(e) => this.updateSelection(e)} type="radio" id="sortByRelevance" name="sortOrder" value="relevance" checked={sortOrder == "relevance" ? true : false} />
           <label htmlFor="sortByRelevance">relevance</label>
           </div>
         </form>
