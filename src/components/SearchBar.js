@@ -43,7 +43,7 @@ class SearchBar extends React.Component {
             <input onChange={(e) => this.updateSelection(e)} type="radio" id="sortByNewest" name="sortOrder" value="newest" checked={sortOrder == "newest" ? true : false} />
             <label htmlFor="sortByNewest">newest</label>
             
-            <input onChange={(e) => this.updateSelection(e)} type="radio" id="sortByRelevance" name="sortOrder" value="relevance" checked={sortOrder == "relevance" ? true : false} />
+            <input onChange={(e) => this.updateSelection(e)} type="radio" id="sortByRelevance" name="sortOrder" value="relevance" checked={sortOrder == "relevance" ? true : false} disabled={this.props.searchString.length < 3 ? true : false} />
             <label htmlFor="sortByRelevance">relevance</label>
             
           </div>

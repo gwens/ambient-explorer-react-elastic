@@ -135,6 +135,7 @@ li.selected  {
   padding: 30px;
   background-color: rgba(256,256,256,0.4);
   color: black;
+  transition: 2s;
 }
 
 /* Back to search results - only visible on small screens */
@@ -149,7 +150,7 @@ li.selected  {
 
 .viewer-header {
   font-weight: bold;
-  color: rgba(50,70,50,0.9);
+  color: rgba(30,60,30,0.9);
   font-size: 18px;
 }
 
@@ -160,8 +161,8 @@ li.selected  {
   text-overflow: ellipsis;
 }
 
-.viewer-label {
-  font-style: italic;
+.viewer-line {
+  padding-bottom: 3px;
 }
 
 header .icon {

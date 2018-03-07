@@ -11,9 +11,9 @@ class Viewer extends React.Component {
         <div className="viewer">
           <button className="back-button" onClick={ this.props.clearEmailSelection }>&#8249;&#8249; back to search results... </button>
           <div className="viewer-header">
-            <div><span className="viewer-label">Date:</span> {selectedEmail.dateString}</div>
-            <div><span className="viewer-label">From:</span> {selectedEmail.from}</div>
-            <div><span className="viewer-label">Subject:</span> {selectedEmail.subject}</div>
+            <div className="viewer-line">Date: {selectedEmail.dateString} </div>
+            <div className="viewer-line">From: {selectedEmail.from}</div>
+            <div className="viewer-line">Subject: {selectedEmail.subject}</div>
           </div>
           <div className="viewer-body" dangerouslySetInnerHTML={{ __html: contentHl }} />
         </div>
