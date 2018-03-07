@@ -173,6 +173,37 @@ header .icon {
   background: rgba(200, 250, 0, 0.15);
 }
 
+
+/* Tooltip for header */
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  opacity: 0;
+  transition: opacity 0.2s linear;
+  color: seashell;
+  text-align: center;
+  padding: 5px;
+  font-size: 16px;
+
+  /* Position the tooltip text */
+  position: absolute;
+  top: 16px;
+  left: 100%; 
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  opacity: 1;
+}
+
+
+
 /***********************/
 /**** MEDIA QUERIES ****/
 /***********************/
@@ -183,7 +214,7 @@ header .icon {
     padding: 0;
   }
   
-  header {
+  header.tooltip {
     display: none;
   }
 
