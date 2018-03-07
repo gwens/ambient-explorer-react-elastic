@@ -18,6 +18,19 @@ class SearchBar extends React.Component {
           <label>Sender:<input type="checkbox" checked="checked"/></label>
           <label>Content:<input type="checkbox" checked="checked"/></label>
           <DateRangePicker dateFilters={this.props.dateFilters} setDateFilters={this.props.setDateFilters} setPage={this.props.setPage}/>
+          Sort by:
+          <div>
+          <input type="radio" id="sortByOldest" name="sortOrder" value="oldest first" />
+          <label for="sortByOldest">oldest</label>
+          </div>
+          <div>
+          <input type="radio" id="sortByNewest" name="sortOrder" value="newest first" />
+          <label for="sortByNewest">newest</label>
+          </div>
+          <div>
+          <input type="radio" id="sortByRelevance" name="sortOrder" value="relevance" />
+          <label for="sortByRelevance">relevance</label>
+          </div>
         </form>
     )
   }

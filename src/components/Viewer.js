@@ -10,9 +10,9 @@ class Viewer extends React.Component {
       return (
         <div className="viewer">
           <div className="viewer-header">
-            <div>Date: {selectedEmail.dateString}</div>
-            <div>From: {selectedEmail.from}</div>
-            <div>Subject: {selectedEmail.subject}</div>
+            <div><span className="viewer-label">Date:</span> {selectedEmail.dateString}</div>
+            <div><span className="viewer-label">From:</span> {selectedEmail.from}</div>
+            <div><span className="viewer-label">Subject:</span> {selectedEmail.subject}</div>
           </div>
           <div dangerouslySetInnerHTML={{ __html: contentHl }} />
         </div>

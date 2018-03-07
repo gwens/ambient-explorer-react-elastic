@@ -43,6 +43,7 @@ body {
   flex-basis: 100%; /* flex-item */
   display: flex; /* flex-container */
   align-items: baseline;
+  justify-content: space-between;
   margin: 35px 0;
   color: black;
   font-size: 16px;
@@ -60,6 +61,11 @@ input[type='checkbox']{
   vertical-align: bottom;
 }
 
+input[type='radio']{
+  margin-top: -1px;
+  vertical-align: middle;
+}
+
 select {
   border-radius: 3px;
   border: 1px solid black;
@@ -69,7 +75,7 @@ select {
 
 label {
   display: inline-block;
-  padding-left: 15px;
+  padding-left: 0px;
   margin-bottom: 0;
 }
 
@@ -140,6 +146,10 @@ li.selected  {
   font-weight: bold;
   color: rgba(50,70,50,0.9);
   font-size: 18px;
+}
+
+.viewer-label {
+  font-style: italic;
 }
 
 header .icon {
