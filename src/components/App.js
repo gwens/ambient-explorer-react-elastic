@@ -143,9 +143,16 @@ class App extends React.Component {
 
   toggleSearchFilters(filter){
     const currentFilters = this.state.searchFilters;
+    // Flip the value of the filter that was clicked
     currentFilters[filter] = !currentFilters[filter];
-    this.setState( { searchFilters: currentFilters, currentPage: 1, loading: true }, () => {
-      this.fetchEmailsFromEs() });
+    this.setState( { searchFilters: currentFilters }, () => {
+      // Only fetch a new set of emails and revert to page 1 if there is a search term
+      if (this.state.searchString.length >= 3) {
+        this.setState( { currentPage: 1, loading: true }, () => {
+          this.fetchEmailsFromEs();
+        });
+      }
+    });
   }
 
   setDateFilters(filters){
