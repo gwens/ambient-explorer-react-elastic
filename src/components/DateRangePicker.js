@@ -14,8 +14,6 @@ class DateRangePicker extends React.Component {
       monthTo: this.monthTo.value
     }
     this.props.setDateFilters(dateFilters);
-    // Reset the page to 1 when applying new date filters. Might only want to do this when the filters have actually changed?
-    this.props.setPage(1);
   }
 
   render() {

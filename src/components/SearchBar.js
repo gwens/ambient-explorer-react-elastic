@@ -2,6 +2,12 @@ import React from 'react';
 import DateRangePicker from './DateRangePicker';
 
 class SearchBar extends React.Component {
+  constructor() {
+    super()
+    this.submitSearch = this.submitSearch.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
+    this.updateSelection = this.updateSelection.bind(this);
+  }
   // This function should take the form input and place it in the App's state as the current set of search filters
   submitSearch(event) {
     event.preventDefault();
@@ -26,7 +32,7 @@ class SearchBar extends React.Component {
           <label>Subject:<input onChange={(e) => this.handleCheck(e)} type="checkbox" value="subject" checked={searchFilters.subject}/></label>
           <label>Sender:<input onChange={(e) => this.handleCheck(e)} type="checkbox" value="sender" checked={searchFilters.sender}/></label>
           <label>Content:<input onChange={(e) => this.handleCheck(e)} type="checkbox" value="content" checked={searchFilters.content}/></label>
-          <DateRangePicker dateFilters={this.props.dateFilters} setDateFilters={this.props.setDateFilters} setPage={this.props.setPage}/>
+          <DateRangePicker dateFilters={this.props.dateFilters} setDateFilters={this.props.setDateFilters} />
           Sort by:
           <div>
           <input onChange={(e) => this.updateSelection(e)} type="radio" id="sortByOldest" name="sortOrder" value="oldest" checked={sortOrder == "oldest" ? true : false} />

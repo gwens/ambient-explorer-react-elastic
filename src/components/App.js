@@ -16,7 +16,6 @@ class App extends React.Component {
     this.clearEmailSelection = this.clearEmailSelection.bind(this);
     this.nextPage = this.nextPage.bind(this);
     this.prevPage = this.prevPage.bind(this);
-    this.setPage = this.setPage.bind(this);
     // Get initial state
     this.state = {
       hits: 0,
@@ -75,7 +74,7 @@ class App extends React.Component {
     let sort;
     if (this.state.sortOrder == "oldest") { sort = {"id.raw": {"order": "asc"}} };
     if (this.state.sortOrder == "newest") { sort = {"id.raw": {"order": "desc"}} };
-    // If two emails have the same score, show them oldest first
+    // Sort by score, but if two emails have the same score, show the oldest first
     if (this.state.sortOrder == "relevance") { sort = [ 
       {"_score": {"order": "desc"}},
       {"id.raw": {"order": "asc"}} 
@@ -130,16 +129,12 @@ class App extends React.Component {
     // Fetch new emails as a callback once setState is finished
     // If searchString is <3 chars, order oldest first by default
     if (searchString.length < 3) {
-      this.setState({ searchString, sortOrder: "oldest", currentPage: 1}, () => { 
+      this.setState({ searchString, sortOrder: "oldest", currentPage: 1 }, () => { 
         this.fetchEmailsFromEs() 
-        // Reset to page 1 for new search results
-        //this.setPage(1)
       })
     } else {
-      this.setState({ searchString, sortOrder: "relevance", currentPage: 1}, () => { 
+      this.setState({ searchString, sortOrder: "relevance", currentPage: 1 }, () => { 
         this.fetchEmailsFromEs() 
-        // Reset to page 1 for new search results
-        //this.setPage(1)
       })
     }
   }
@@ -158,7 +153,7 @@ class App extends React.Component {
     // Replacing spread with Object.assign (works as object is only one level deep)
     const dateFilters = Object.assign({}, filters);
     // Fetch emails as callback only once date filters are set
-    this.setState({ dateFilters }, () => { this.fetchEmailsFromEs() });
+    this.setState({ dateFilters, currentPage: 1 }, () => { this.fetchEmailsFromEs() });
   }
 
   setSortOrder(option){
@@ -185,17 +180,11 @@ class App extends React.Component {
     this.setState( { currentPage }, () => { this.fetchEmailsFromEs() });
   }
 
-  setPage(x) {
-    let currentPage = this.state.currentPage;
-    currentPage = x;
-    this.setState( { currentPage }, () => { this.fetchEmailsFromEs() });
-  }
-
   render() {
     return (
       <div className="navigator">
         <Header />
-        <SearchBar setSearchString={this.setSearchString} dateFilters={this.state.dateFilters} setDateFilters={this.setDateFilters} toggleSearchFilters={this.toggleSearchFilters} searchFilters={this.state.searchFilters} sortOrder={this.state.sortOrder} setSortOrder={this.setSortOrder} clearEmailSelection={this.clearEmailSelection} setPage={this.setPage}/>
+        <SearchBar setSearchString={this.setSearchString} dateFilters={this.state.dateFilters} setDateFilters={this.setDateFilters} toggleSearchFilters={this.toggleSearchFilters} searchFilters={this.state.searchFilters} sortOrder={this.state.sortOrder} setSortOrder={this.setSortOrder} clearEmailSelection={this.clearEmailSelection} />
         <div className="main-container">
           <Results emails={this.state.emails} selectEmail={this.selectEmail} selectedEmail={this.state.selectedEmail} currentPage={this.state.currentPage} nextPage={this.nextPage} prevPage={this.prevPage} hits={this.state.hits} resultsPerPage={this.resultsPerPage}/>
           <Viewer selectedEmail={this.state.emails[this.state.selectedEmail]} searchString={this.state.searchString}/>
