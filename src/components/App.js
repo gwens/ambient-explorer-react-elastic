@@ -33,7 +33,7 @@ class App extends React.Component {
         monthFrom: "01",
         monthTo: "12"
       },
-      sortOrder: "newest",
+      sortOrder: "oldest",
       selectedEmail: null, // Holds the email to be displayed in the viewer
       currentPage: 1
     };
@@ -71,14 +71,21 @@ class App extends React.Component {
     // Pagination
     const from = (this.state.currentPage - 1) * this.resultsPerPage;
 
+    // Sort order
+    let sort;
+    if (this.state.sortOrder == "oldest") { sort = {"id.raw": {"order": "asc"}} };
+    if (this.state.sortOrder == "newest") { sort = {"id.raw": {"order": "desc"}} };
+    // If two emails have the same score, show them oldest first
+    if (this.state.sortOrder == "relevance") { sort = [ 
+      {"_score": {"order": "desc"}},
+      {"id.raw": {"order": "asc"}} 
+    ]};
+
     // Combined elasticsearch query with date filters, sorting and pagination
     const query = {
       "from": from,
       "size": this.resultsPerPage,
-      "sort": [ 
-        {"_score": {"order": "desc"}},
-        {"id.raw": {"order": "asc"}} 
-      ],
+      "sort": sort,
       "query": {
         "bool": {
           "filter": {
@@ -121,11 +128,20 @@ class App extends React.Component {
 
   setSearchString(searchString){
     // Fetch new emails as a callback once setState is finished
-    this.setState({ searchString }, () => { 
-      this.fetchEmailsFromEs() 
-      // Reset to page 1 for new search results
-      this.setPage(1)
-    });
+    // If searchString is <3 chars, order oldest first by default
+    if (searchString.length < 3) {
+      this.setState({ searchString, sortOrder: "oldest"}, () => { 
+        //this.fetchEmailsFromEs() 
+        // Reset to page 1 for new search results
+        this.setPage(1)
+      })
+    } else {
+      this.setState({ searchString, sortOrder: "relevance"}, () => { 
+        //this.fetchEmailsFromEs() 
+        // Reset to page 1 for new search results
+        this.setPage(1)
+      })
+    }
   }
 
   toggleSearchFilters(filter){
@@ -146,7 +162,7 @@ class App extends React.Component {
   }
 
   setSortOrder(option){
-    this.setState({ sortOrder: option });
+    this.setState({ sortOrder: option }, () => { this.fetchEmailsFromEs() });
   }
 
   selectEmail(id){
