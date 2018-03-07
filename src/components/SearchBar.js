@@ -28,23 +28,24 @@ class SearchBar extends React.Component {
     const { searchFilters, sortOrder } = this.props;
     return (
         <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
-          <input onChange={(e) => this.submitSearch(e)} ref={(input) => this.searchString = input} type="text" className="search" placeholder="Search me..."/>
-          <label>Subject:<input onChange={(e) => this.handleCheck(e)} type="checkbox" value="subject" checked={searchFilters.subject}/></label>
-          <label>Sender:<input onChange={(e) => this.handleCheck(e)} type="checkbox" value="sender" checked={searchFilters.sender}/></label>
-          <label>Content:<input onChange={(e) => this.handleCheck(e)} type="checkbox" value="content" checked={searchFilters.content}/></label>
+          <input onChange={(e) => this.submitSearch(e)} ref={(input) => this.searchString = input} type="text" className="search" placeholder="Search..."/>
+          <div>
+            <label><input onChange={(e) => this.handleCheck(e)} type="checkbox" value="subject" checked={searchFilters.subject}/>subject</label>
+            <label><input onChange={(e) => this.handleCheck(e)} type="checkbox" value="sender" checked={searchFilters.sender}/>sender</label>
+            <label><input onChange={(e) => this.handleCheck(e)} type="checkbox" value="content" checked={searchFilters.content}/>content</label>
+          </div>
           <DateRangePicker dateFilters={this.props.dateFilters} setDateFilters={this.props.setDateFilters} />
-          Sort by:
-          <div>
-          <input onChange={(e) => this.updateSelection(e)} type="radio" id="sortByOldest" name="sortOrder" value="oldest" checked={sortOrder == "oldest" ? true : false} />
-          <label htmlFor="sortByOldest">oldest</label>
-          </div>
-          <div>
-          <input onChange={(e) => this.updateSelection(e)} type="radio" id="sortByNewest" name="sortOrder" value="newest" checked={sortOrder == "newest" ? true : false} />
-          <label htmlFor="sortByNewest">newest</label>
-          </div>
-          <div>
-          <input onChange={(e) => this.updateSelection(e)} type="radio" id="sortByRelevance" name="sortOrder" value="relevance" checked={sortOrder == "relevance" ? true : false} />
-          <label htmlFor="sortByRelevance">relevance</label>
+          <div>Sort by:
+            
+            <input onChange={(e) => this.updateSelection(e)} type="radio" id="sortByOldest" name="sortOrder" value="oldest" checked={sortOrder == "oldest" ? true : false} />
+            <label htmlFor="sortByOldest">oldest</label>
+            
+            <input onChange={(e) => this.updateSelection(e)} type="radio" id="sortByNewest" name="sortOrder" value="newest" checked={sortOrder == "newest" ? true : false} />
+            <label htmlFor="sortByNewest">newest</label>
+            
+            <input onChange={(e) => this.updateSelection(e)} type="radio" id="sortByRelevance" name="sortOrder" value="relevance" checked={sortOrder == "relevance" ? true : false} />
+            <label htmlFor="sortByRelevance">relevance</label>
+            
           </div>
         </form>
     )
