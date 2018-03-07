@@ -58,7 +58,6 @@ class App extends React.Component {
     if (this.state.searchFilters.subject) { matchVarious.push(matchSubject); };
     if (this.state.searchFilters.sender) { matchVarious.push(matchSender); };
     if (this.state.searchFilters.content) { matchVarious.push(matchContent); };
-    console.log(matchVarious);
     // Full query for matching a string if a search term exists
     const matchString = [
       { "bool": {
