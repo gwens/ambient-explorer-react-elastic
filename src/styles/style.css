@@ -274,24 +274,22 @@ header .icon {
   }
 }
 
-
-
 @media only screen  and (min-width : 1224px) {
   .search {
-    width: 200px;
+    width: 180px;
   }
   .search-bar {
-    width: 1200px;
+    width: 1100px;
     justify-content: space-between;
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .results {
-    width: 380px;
+    width: 330px;
   }
 
   .viewer {
-    width: 800px;
+    width: 750px;
     margin-left: 20px;
   }
 }
