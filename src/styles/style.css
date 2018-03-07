@@ -35,8 +35,8 @@ body {
 }
 
 .navigator {
-  display: flex;
-  flex-wrap: wrap;
+  /*display: flex;
+  flex-wrap: wrap;*/
 }
 
 .search-bar {
@@ -80,12 +80,11 @@ label {
 }
 
 .main-container {
-  display: flex;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 380px 800px;
 }
 
 .results {
-  flex: 1;
   border-radius: 10px;
   background-color: rgba(0,0,0,0.4);
   margin-bottom: 50px;
@@ -133,7 +132,6 @@ li.selected  {
 }
 
 .viewer {
-  flex: 2;
   border-radius: 10px;
   margin-left: 25px;
   margin-bottom: 50px;
@@ -146,6 +144,13 @@ li.selected  {
   font-weight: bold;
   color: rgba(50,70,50,0.9);
   font-size: 18px;
+}
+
+.viewer-body {
+  white-space: pre-wrap;
+  overflow: hidden;
+  table-layout: fixed;
+  text-overflow: ellipsis;
 }
 
 .viewer-label {

@@ -14,7 +14,7 @@ class Viewer extends React.Component {
             <div><span className="viewer-label">From:</span> {selectedEmail.from}</div>
             <div><span className="viewer-label">Subject:</span> {selectedEmail.subject}</div>
           </div>
-          <div dangerouslySetInnerHTML={{ __html: contentHl }} />
+          <div className="viewer-body" dangerouslySetInnerHTML={{ __html: contentHl }} />
         </div>
       )
     }
