@@ -30,9 +30,9 @@ class SearchBar extends React.Component {
         <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
           <input className="search-elem" onChange={(e) => this.submitSearch(e)} ref={(input) => this.searchString = input} type="text" className="search" placeholder="Search..."/>
           <div className="search-elem" >
-            <label><input onChange={(e) => this.handleCheck(e)} type="checkbox" value="subject" checked={searchFilters.subject}/>subject</label>
-            <label><input onChange={(e) => this.handleCheck(e)} type="checkbox" value="sender" checked={searchFilters.sender}/>sender</label>
-            <label><input onChange={(e) => this.handleCheck(e)} type="checkbox" value="content" checked={searchFilters.content}/>content</label>
+            <label>subject<input onChange={(e) => this.handleCheck(e)} type="checkbox" value="subject" checked={searchFilters.subject}/></label>
+            <label>sender<input onChange={(e) => this.handleCheck(e)} type="checkbox" value="sender" checked={searchFilters.sender}/></label>
+            <label>content<input onChange={(e) => this.handleCheck(e)} type="checkbox" value="content" checked={searchFilters.content}/></label>
           </div>
           <DateRangePicker dateFilters={this.props.dateFilters} setDateFilters={this.props.setDateFilters} />
           <div className="search-elem">Sort by:

@@ -11,7 +11,7 @@ class Results extends React.Component {
       <div className={this.props.selectedEmail ? "results active" : "results"}>
         <div className="results-controls">
           <button onClick={this.props.prevPage} disabled={currentPage === 1}>&#8249;&#8249;</button>
-          <span>page: {currentPage}</span>
+          <span>page: {currentPage}/{numPages}</span>
           <button onClick={currentPage < numPages ? this.props.nextPage : null} disabled={currentPage === numPages}>&#8250;&#8250;</button>
         </div>
         <div className={this.props.loading ? "loader" : "loader disabled"}></div>

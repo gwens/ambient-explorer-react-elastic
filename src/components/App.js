@@ -38,7 +38,7 @@ class App extends React.Component {
       loading: true
     };
     // Get emails from elasticsearch
-    this.resultsPerPage = 25;
+    this.resultsPerPage = 15;
     this.fetchEmailsFromEs();
   }
 
@@ -144,8 +144,7 @@ class App extends React.Component {
   toggleSearchFilters(filter){
     const currentFilters = this.state.searchFilters;
     currentFilters[filter] = !currentFilters[filter];
-    this.setState( { searchFilters: currentFilters }, () => { 
-      this.setState( { loading: true } );
+    this.setState( { searchFilters: currentFilters, currentPage: 1, loading: true }, () => {
       this.fetchEmailsFromEs() });
   }
 
@@ -163,8 +162,7 @@ class App extends React.Component {
   }
 
   setSortOrder(option){
-    this.setState({ sortOrder: option }, () => { 
-      this.setState( { loading: true } );
+    this.setState({ sortOrder: option, currentPage: 1, loading: true }, () => { 
       this.fetchEmailsFromEs() });
   }
 

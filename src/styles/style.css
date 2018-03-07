@@ -56,13 +56,13 @@ input {
 }
 
 input[type='checkbox']{
-  margin-bottom: 0;
+  margin-bottom:-2px;
   vertical-align: bottom;
 }
 
 input[type='radio']{
-  margin-top: -1px;
-  vertical-align: middle;
+  margin-top: 0px;
+  vertical-align: top;
 }
 
 select {
