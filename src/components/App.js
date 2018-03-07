@@ -9,6 +9,7 @@ class App extends React.Component {
     super();
     this.fetchEmailsFromEs = this.fetchEmailsFromEs.bind(this);
     this.setSearchString = this.setSearchString.bind(this);
+    this.toggleSearchFilters = this.toggleSearchFilters.bind(this);
     this.setDateFilters = this.setDateFilters.bind(this);
     this.selectEmail = this.selectEmail.bind(this);
     this.clearEmailSelection = this.clearEmailSelection.bind(this);
@@ -20,6 +21,11 @@ class App extends React.Component {
       hits: 0,
       emails: {},
       searchString: "",
+      searchFilters: {
+        subject: true,
+        sender: true,
+        content: true
+      },
       dateFilters: {
         yearFrom: "1994",
         yearTo: "2017",
@@ -43,14 +49,20 @@ class App extends React.Component {
 
     // Partial query for matching all if no search term
     const matchAll = [{"match_all" : {}}];
+
+    const matchSubject = { "match": { "subject": {"query": `${searchString}`, "boost": 2} } };
+    // NB sender is called 'from' in dataset
+    const matchSender = { "match": { "from": { "query": `${searchString}`, "boost": 1.5 } } };
+    const matchContent = { "match": { "content": `${searchString}` } };
+    const matchVarious = [];
+    if (this.state.searchFilters.subject) { matchVarious.push(matchSubject); };
+    if (this.state.searchFilters.sender) { matchVarious.push(matchSender); };
+    if (this.state.searchFilters.content) { matchVarious.push(matchContent); };
+    console.log(matchVarious);
     // Full query for matching a string if a search term exists
     const matchString = [
       { "bool": {
-        "should": [
-          { "match": { "subject": {"query": `${searchString}`, "boost": 2} } },
-          { "match": { "sender": { "query": `${searchString}`, "boost": 1.5 } } },
-          { "match": { "content": `${searchString}` } }
-        ]
+        "should": matchVarious
       }}];
     // Start checking for matches once the string is at least 3 characters long
     const matchQuery = searchString.length > 2 ? matchString : matchAll;
@@ -115,6 +127,12 @@ class App extends React.Component {
     });
   }
 
+  toggleSearchFilters(filter){
+    const currentFilters = this.state.searchFilters;
+    currentFilters[filter] = !currentFilters[filter];
+    this.setState( { searchFilters: currentFilters }, () => { this.fetchEmailsFromEs() });
+  }
+
   setDateFilters(filters){
     // Create a copy of the current state first... 
     // Spread operator not working in new build config, need to figure out Babel?
@@ -156,7 +174,7 @@ class App extends React.Component {
     return (
       <div className="navigator">
         <Header />
-        <SearchBar setSearchString={this.setSearchString} dateFilters={this.state.dateFilters} setDateFilters={this.setDateFilters} clearEmailSelection={this.clearEmailSelection} setPage={this.setPage}/>
+        <SearchBar setSearchString={this.setSearchString} dateFilters={this.state.dateFilters} setDateFilters={this.setDateFilters} toggleSearchFilters={this.toggleSearchFilters} searchFilters={this.state.searchFilters} clearEmailSelection={this.clearEmailSelection} setPage={this.setPage}/>
         <div className="main-container">
           <Results emails={this.state.emails} selectEmail={this.selectEmail} selectedEmail={this.state.selectedEmail} currentPage={this.state.currentPage} nextPage={this.nextPage} prevPage={this.prevPage} hits={this.state.hits} resultsPerPage={this.resultsPerPage}/>
           <Viewer selectedEmail={this.state.emails[this.state.selectedEmail]} searchString={this.state.searchString}/>
