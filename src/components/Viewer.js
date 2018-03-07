@@ -9,6 +9,7 @@ class Viewer extends React.Component {
       const contentHl = searchString ? selectedEmail.content.replace(regex, `<span class="hl">${searchString}</span>`) : selectedEmail.content ;
       return (
         <div className="viewer">
+          <button className="back-button" onClick={ this.props.clearEmailSelection }>&#8249;&#8249; back to search results... </button>
           <div className="viewer-header">
             <div><span className="viewer-label">Date:</span> {selectedEmail.dateString}</div>
             <div><span className="viewer-label">From:</span> {selectedEmail.from}</div>

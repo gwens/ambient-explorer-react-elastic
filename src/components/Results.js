@@ -8,7 +8,7 @@ class Results extends React.Component {
     const currentPage = this.props.currentPage;
     const numPages = Math.ceil(this.props.hits / this.props.resultsPerPage);
     return (
-      <div className="results">
+      <div className={this.props.selectedEmail ? "results active" : "results"}>
         <div className="results-controls">
           <button onClick={this.props.prevPage} disabled={currentPage === 1}>&#8249;&#8249;</button>
           <span>page: {currentPage}</span>
