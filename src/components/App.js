@@ -130,16 +130,16 @@ class App extends React.Component {
     // Fetch new emails as a callback once setState is finished
     // If searchString is <3 chars, order oldest first by default
     if (searchString.length < 3) {
-      this.setState({ searchString, sortOrder: "oldest"}, () => { 
-        //this.fetchEmailsFromEs() 
+      this.setState({ searchString, sortOrder: "oldest", currentPage: 1}, () => { 
+        this.fetchEmailsFromEs() 
         // Reset to page 1 for new search results
-        this.setPage(1)
+        //this.setPage(1)
       })
     } else {
-      this.setState({ searchString, sortOrder: "relevance"}, () => { 
-        //this.fetchEmailsFromEs() 
+      this.setState({ searchString, sortOrder: "relevance", currentPage: 1}, () => { 
+        this.fetchEmailsFromEs() 
         // Reset to page 1 for new search results
-        this.setPage(1)
+        //this.setPage(1)
       })
     }
   }
