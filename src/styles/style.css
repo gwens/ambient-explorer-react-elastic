@@ -4,7 +4,7 @@ html {
   background-repeat: no-repeat; 
   background-size: cover;
   font-family:'courier new';
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 200;
   color:seashell;
   overflow: hidden;
@@ -240,7 +240,7 @@ header .icon {
   .viewer-header {
     font-size: 16px;
   }
-  
+
   .back-button {
     display: true;
   }
