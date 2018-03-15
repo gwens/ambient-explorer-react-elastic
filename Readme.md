@@ -1,6 +1,8 @@
 # Email Archive Explorer with React and Elasticsearch
 
-Application for searching and exploring the archives of Hyperreal's Ambient music mailing list
+Application for searching and exploring the archives of Hyperreal's Ambient music mailing list: 
+
+https://ambient-explorer.ml
 
 Archives in their original format: http://music.hyperreal.org/lists/ambient/archives/ (~ 75k emails total)
 
