@@ -1,8 +1,27 @@
-# Ambient Explorer with React and Elasticsearch
+# Email Archive Explorer with React and Elasticsearch
 
-Requires email data from elasticsearch on locallhost
+Application for searching and exploring the archives of Hyperreal's Ambient music mailing list
 
-## Install
+Archives in their original format: http://music.hyperreal.org/lists/ambient/archives/ (~ 75k emails total)
+
+These archives have been parsed and converted to JSON using PowerShell, then loaded into Elasticsearch on AWS. The front end is built in React and compiled with Webpack. 
+
+This is version 3 of this application. 
+
+Overview of the different versions:
+
+1. Plain JavaScript app using a small subset of the data (1000 emails) loaded in the client. Searches as you type and returns prioritized results using a basic scoring system. Basic date filters.
+2. First React version, using create-react-app. Still uses client-side JSON data (doesn't work with the full dataset). Can set a date range but there are no sorting or filtering options.
+3. This version. Rebuilt with Webpack build process, without create-react-app. Data now lives in an (unsecured) Elasticsearch on AWS. Can explore the full archive of 75k emails. Includes sorting and search filters. Styled!
+
+Roadmap for v4:
+
+* Add lightweight API layer to add some security to the Elasticsearch
+* Have another look at how the Elasticsearch API calls are handled (they are currently callbacks in various places after state changes)
+* Refactor App.js (e.g. all search logic is handled by one big function at the moment...)
+* Email threading..?
+
+## Install dependencies
 
 `npm install`
 
