@@ -26,7 +26,7 @@ batchArray.forEach( function (batch, index) {
   })
 
   batch.forEach( function (item,i) {
-      stream.write(`{"index":{"_id":"${i + 1000 * index}"}}` + "\n" + JSON.stringify(batch[i]) + "\n");
+      stream.write(`{"index":{"_id":"${i + 10000 * index}"}}` + "\n" + JSON.stringify(batch[i]) + "\n");
   });
   
   stream.end();
