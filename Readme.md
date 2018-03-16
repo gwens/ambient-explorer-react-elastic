@@ -14,7 +14,7 @@ This is version 3 of this application. Overview of the different versions:
 2. First React version, using create-react-app (https://github.com/gwens/ambient-explorer-react). Still uses client-side JSON data (doesn't work with the full dataset). Can set a date range but there are no sorting or filtering options. 
 3. This version. Rebuilt using my Webpack build template, without create-react-app. Data now lives in an (unsecured) Elasticsearch on AWS. Can explore the full archive of 75k emails. Includes sorting and search filters. Styled!
 
-Roadmap for v4:
+Roadmap:
 
 * Add lightweight API layer to add some security to the Elasticsearch
 * Have another look at how the Elasticsearch API calls are handled (they are currently callbacks in various places after state changes)
