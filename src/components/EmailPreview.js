@@ -6,7 +6,7 @@ class EmailPreview extends React.Component {
   return (
       <li onClick={() => this.props.selectEmail(index)} className={selectedEmail==index? "selected" : "unselected"}>
         <div className="sender">{details.from}</div>
-        <div className="subject">{details.subject}}</div>
+        <div className="subject">{details.subject}</div>
       </li>
     )
   }
