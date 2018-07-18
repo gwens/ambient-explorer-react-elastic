@@ -1,5 +1,5 @@
-import React from 'react';
-import DateRangePicker from './DateRangePicker';
+import React from "react";
+import DateRangePicker from "./DateRangePicker";
 
 class SearchBar extends React.Component {
   constructor() {

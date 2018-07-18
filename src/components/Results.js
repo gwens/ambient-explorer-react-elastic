@@ -1,5 +1,5 @@
-import React from 'react';
-import EmailPreview from './EmailPreview';
+import React from "react";
+import EmailPreview from "./EmailPreview";
 
 const Results = (props) => {
   const { emails, selectEmail, selectedEmail, currentPage, nextPage, prevPage, hits, resultsPerPage, loading } = props;

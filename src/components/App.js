@@ -1,8 +1,8 @@
-import React from 'react';
-import Header from './Header';
-import SearchBar from './SearchBar';
-import Results from './Results';
-import Viewer from './Viewer';
+import React from "react";
+import Header from "./Header";
+import SearchBar from "./SearchBar";
+import Results from "./Results";
+import Viewer from "./Viewer";
 
 class App extends React.Component {
   constructor() {
