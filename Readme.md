@@ -17,8 +17,7 @@ This is version 3 of this application. Overview of the different versions:
 Roadmap:
 
 * Add lightweight API layer to add some security to the Elasticsearch
-* Have another look at how the Elasticsearch API calls are handled (they are currently callbacks in various places after state changes)
-* Refactor App.js (e.g. all search logic is handled by one big function at the moment...)
+* Have another look at how the Elasticsearch API calls are handled (they are currently callbacks in various places after state changes) [18.7 - replaced callbacks with lifecycle methods, but still need to create a joint method for fetching the emails]
 * Email threading..?
 
 ## Install dependencies
