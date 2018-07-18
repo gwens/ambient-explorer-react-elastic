@@ -3,15 +3,19 @@ import React from "react";
 class DateRangePicker extends React.Component {
   constructor(props) {
     super(props)
+    this.monthFromRef = React.createRef();
+    this.yearFromRef = React.createRef();
+    this.monthToRef = React.createRef();
+    this.yearToRef = React.createRef();
     this.updateDateFilters = this.updateDateFilters.bind(this);
   }
   updateDateFilters(event) {
     event.preventDefault();
     const dateFilters = {
-      yearFrom: this.yearFrom.value,
-      yearTo: this.yearTo.value,
-      monthFrom: this.monthFrom.value,
-      monthTo: this.monthTo.value
+      yearFrom: this.yearFromRef.current.value,
+      yearTo: this.yearToRef.current.value,
+      monthFrom: this.monthFromRef.current.value,
+      monthTo: this.monthToRef.current.value
     }
     this.props.setDateFilters(dateFilters);
   }
@@ -39,7 +43,7 @@ class DateRangePicker extends React.Component {
     return (
       <div className="search-elem">
         <label>From:
-        <select onChange={(e) => this.updateDateFilters(e)} ref={(input) => this.monthFrom = input} defaultValue="01">
+        <select onChange={(e) => this.updateDateFilters(e)} ref={this.monthFromRef} defaultValue="01">
           {
             Object
               .keys(months)
@@ -47,7 +51,7 @@ class DateRangePicker extends React.Component {
               .map(key => <option key={key} value={key}>{months[key]}</option>)
           }
         </select>
-        <select onChange={(e) => this.updateDateFilters(e)}  ref={(input) => this.yearFrom = input} defaultValue={dateRange.yearFrom.toString()}>
+        <select onChange={(e) => this.updateDateFilters(e)}  ref={this.yearFromRef} defaultValue={dateRange.yearFrom.toString()}>
           {
             years
               .map(year => <option key={year} value={year}>{year}</option>)
@@ -55,7 +59,7 @@ class DateRangePicker extends React.Component {
         </select>
         </label>
         <label>To:
-        <select onChange={(e) => this.updateDateFilters(e)}  ref={(input) => this.monthTo = input} defaultValue="12">
+        <select onChange={(e) => this.updateDateFilters(e)}  ref={this.monthToRef} defaultValue="12">
           {
             Object
               .keys(months)
@@ -63,7 +67,7 @@ class DateRangePicker extends React.Component {
               .map(key => <option key={key} value={key} disabled={(dateFilters.yearTo === dateFilters.yearFrom && dateFilters.monthFrom > key) ? true : false}>{months[key]}</option>)
           }
         </select>
-        <select onChange={(e) => this.updateDateFilters(e)} ref={(input) => this.yearTo = input} defaultValue={dateRange.yearTo.toString()}>
+        <select onChange={(e) => this.updateDateFilters(e)} ref={this.yearToRef} defaultValue={dateRange.yearTo.toString()}>
           {
             years
               .map(year => <option key={year} value={year} disabled={dateFilters.yearFrom <= year ? false : true}>{year}</option>)
