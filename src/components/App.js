@@ -3,6 +3,7 @@ import Header from "./Header";
 import SearchBar from "./SearchBar";
 import Results from "./Results";
 import Viewer from "./Viewer";
+import { buildElasticSearchQuery } from "../helpers";
 
 class App extends React.Component {
   constructor() {
@@ -49,63 +50,14 @@ class App extends React.Component {
 
   // Gets emails from elasticsearch and sets them in state
   fetchEmailsFromEs() {
-    const searchString = this.state.searchString;
-    const dateFilters = this.state.dateFilters;
-    const elasticUrl = "https://search-search-archive-sxxeh2lvo7lacugez36nv2f4bq.us-east-2.es.amazonaws.com/emails/_search"
-    // Default query for no search term, returns all documents
-
-    // Partial query for matching all if no search term
-    const matchAll = [{"match_all" : {}}];
-
-    const matchSubject = { "match": { "subject": {"query": `${searchString}`, "boost": 2} } };
-    // NB sender is called 'from' in dataset
-    const matchSender = { "match": { "from": { "query": `${searchString}`, "boost": 1.5 } } };
-    const matchContent = { "match": { "content": `${searchString}` } };
-    const matchVarious = [];
-    if (this.state.searchFilters.subject) { matchVarious.push(matchSubject); };
-    if (this.state.searchFilters.sender) { matchVarious.push(matchSender); };
-    if (this.state.searchFilters.content) { matchVarious.push(matchContent); };
-    // Full query for matching a string if a search term exists
-    const matchString = [
-      { "bool": {
-        "should": matchVarious
-      }}];
-    // Start checking for matches once the string is at least 3 characters long
-    const matchQuery = searchString.length > 2 ? matchString : matchAll;
-
-    // Pagination
-    const from = (this.state.currentPage - 1) * this.resultsPerPage;
-
-    // Sort order
-    let sort;
-    if (this.state.sortOrder == "oldest") { sort = {"id.raw": {"order": "asc"}} };
-    if (this.state.sortOrder == "newest") { sort = {"id.raw": {"order": "desc"}} };
-    // Sort by score, but if two emails have the same score, show the oldest first
-    if (this.state.sortOrder == "relevance") { sort = [ 
-      {"_score": {"order": "desc"}},
-      {"id.raw": {"order": "asc"}} 
-    ]};
-
-    // Combined elasticsearch query with date filters, sorting and pagination
-    const query = {
-      "from": from,
-      "size": this.resultsPerPage,
-      "sort": sort,
-      "query": {
-        "bool": {
-          "filter": {
-              "range": {
-                "id": {
-                  "gte": `amb_${dateFilters.yearFrom}_${dateFilters.monthFrom}`,
-                  "lte": `amb_${dateFilters.yearTo}_${dateFilters.monthTo}`,
-                  "format": "'amb_'yyyy'_'mm"
-                  }
-              } 
-          },
-          "must": matchQuery
-        }
-      }
+    const elasticUrl = "https://search-search-archive-sxxeh2lvo7lacugez36nv2f4bq.us-east-2.es.amazonaws.com/emails/_search";
+    const searchParams = {
+      searchString: this.state.searchString,
+      searchFilters: this.state.searchFilters,
+      dateFilters: this.state.dateFilters, 
+      sortOrder: this.state.sortOrder
     }
+    const query = buildElasticSearchQuery(searchParams, this.state.currentPage, this.resultsPerPage);
 
     fetch(elasticUrl, {
       method: 'POST', 
