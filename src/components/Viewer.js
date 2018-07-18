@@ -1,15 +1,13 @@
 import React from 'react';
 
-class Viewer extends React.Component {
-  render() {
-    const { selectedEmail } = this.props;
-    if(this.props.selectedEmail) {
-      const searchString = this.props.searchString;
+const Viewer = (props) => {
+    const { selectedEmail, clearEmailSelection, searchString } = props;
+    if(selectedEmail) {
       const regex = new RegExp(searchString, 'gi');
       const contentHl = searchString ? selectedEmail.content.replace(regex, `<span class="hl">${searchString}</span>`) : selectedEmail.content ;
       return (
         <div className="viewer">
-          <button className="back-button" onClick={ this.props.clearEmailSelection }>&#8249;&#8249; back to search results... </button>
+          <button className="back-button" onClick={ clearEmailSelection }>&#8249;&#8249; back to search results... </button>
           <div className="viewer-header">
             <div className="viewer-line">Date: {selectedEmail.dateString} </div>
             <div className="viewer-line">From: {selectedEmail.from}</div>
@@ -23,6 +21,5 @@ class Viewer extends React.Component {
       return null;
     }
   }
-}
 
 export default Viewer;
