@@ -8,7 +8,7 @@ import { buildElasticSearchQuery } from "../helpers";
 class App extends React.Component {
   constructor() {
     super();
-    this.fetchEmailsFromEs = this.fetchEmailsFromEs.bind(this);
+    //this.fetchEmailsFromEs = this.fetchEmailsFromEs.bind(this);
     this.setSearchString = this.setSearchString.bind(this);
     this.toggleSearchFilters = this.toggleSearchFilters.bind(this);
     this.setDateFilters = this.setDateFilters.bind(this);
@@ -17,7 +17,7 @@ class App extends React.Component {
     this.clearEmailSelection = this.clearEmailSelection.bind(this);
     this.nextPage = this.nextPage.bind(this);
     this.prevPage = this.prevPage.bind(this);
-    // Get initial state
+    // Initial state
     this.state = {
       hits: 0,
       emails: {},
@@ -43,13 +43,11 @@ class App extends React.Component {
       yearFrom: 1994,
       yearTo: 2017
     }
-    // Get emails from elasticsearch
+    // And the number of results per page
     this.resultsPerPage = 15;
-    this.fetchEmailsFromEs();
   }
 
-  // Gets emails from elasticsearch and sets them in state
-  fetchEmailsFromEs() {
+  componentDidMount() {
     const elasticUrl = "https://search-search-archive-sxxeh2lvo7lacugez36nv2f4bq.us-east-2.es.amazonaws.com/emails/_search";
     const searchParams = {
       searchString: this.state.searchString,
@@ -77,24 +75,90 @@ class App extends React.Component {
       });
       const emails = Object.assign(results);
       // Record the total hits, to control pagination
-      this.setState({ hits: response.hits.total });
-      // And set the emails into state
-      this.setState({ emails }, () => { this.setState({ loading: false}) });
-      // Stop the spinner
+      const hits = response.hits.total;
+      // Set emails and hits into state and stop the spinner
+      this.setState({ emails, hits, loading: false });
     });
   }
 
+  // NB duplication
+  componentDidUpdate() {
+    const elasticUrl = "https://search-search-archive-sxxeh2lvo7lacugez36nv2f4bq.us-east-2.es.amazonaws.com/emails/_search";
+    const searchParams = {
+      searchString: this.state.searchString,
+      searchFilters: this.state.searchFilters,
+      dateFilters: this.state.dateFilters, 
+      sortOrder: this.state.sortOrder
+    }
+    const query = buildElasticSearchQuery(searchParams, this.state.currentPage, this.resultsPerPage);
+
+    fetch(elasticUrl, {
+      method: 'POST', 
+      body: JSON.stringify(query), 
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    }).then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => {
+      let results = {};
+      response.hits.hits.map(hit => {
+        let email = hit._source;
+        email.score = hit._score;
+        let id = hit._source.id;
+        results[`${id}`] = email;
+      });
+      const emails = Object.assign(results);
+      // Record the total hits, to control pagination
+      const hits = response.hits.total;
+      // Set emails and hits into state and stop the spinner
+      this.setState({ emails, hits, loading: false });
+    });
+  }
+
+  // TODO: update this to return a promise, then call it from ComponentDidMount and ComponentDidUpdate
+  // Gets emails from elasticsearch
+  /*fetchEmailsFromEs() {
+    const elasticUrl = "https://search-search-archive-sxxeh2lvo7lacugez36nv2f4bq.us-east-2.es.amazonaws.com/emails/_search";
+    const searchParams = {
+      searchString: this.state.searchString,
+      searchFilters: this.state.searchFilters,
+      dateFilters: this.state.dateFilters, 
+      sortOrder: this.state.sortOrder
+    }
+    const query = buildElasticSearchQuery(searchParams, this.state.currentPage, this.resultsPerPage);
+
+    fetch(elasticUrl, {
+      method: 'POST', 
+      body: JSON.stringify(query), 
+      headers: new Headers({
+        'Content-Type': 'application/json'
+      })
+    }).then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => {
+      let results = {};
+      response.hits.hits.map(hit => {
+        let email = hit._source;
+        email.score = hit._score;
+        let id = hit._source.id;
+        results[`${id}`] = email;
+      });
+      const emails = Object.assign(results);
+      // Record the total hits, to control pagination
+      const hits = response.hits.total;
+      //this.setState({ hits: response.hits.total });
+      // Return the results
+      return { emails, hits };
+    });
+  }*/
+
   setSearchString(searchString){
-    // Fetch new emails as a callback once setState is finished
     // If searchString is <3 chars, order oldest first by default
     if (searchString.length < 3) {
-      this.setState({ searchString, sortOrder: "oldest", currentPage: 1 }, () => { 
-        this.fetchEmailsFromEs() 
-      })
+      this.setState({ searchString, sortOrder: "oldest", currentPage: 1 });
     } else {
-      this.setState({ searchString, sortOrder: "relevance", currentPage: 1 }, () => { 
-        this.fetchEmailsFromEs() 
-      })
+      this.setState({ searchString, sortOrder: "relevance", currentPage: 1 });
     }
   }
 
@@ -105,9 +169,7 @@ class App extends React.Component {
     this.setState( { searchFilters: currentFilters }, () => {
       // Only fetch a new set of emails and revert to page 1 if there is a search term
       if (this.state.searchString.length >= 3) {
-        this.setState( { currentPage: 1, loading: true }, () => {
-          this.fetchEmailsFromEs();
-        });
+        this.setState( { currentPage: 1, loading: true });
       }
     });
   }
@@ -119,15 +181,11 @@ class App extends React.Component {
     //this.setState({ dateFilters });
     // Replacing spread with Object.assign (works as object is only one level deep)
     const dateFilters = Object.assign({}, filters);
-    // Fetch emails as callback only once date filters are set
-    this.setState({ dateFilters, currentPage: 1 }, () => { 
-      this.setState( { loading: true } );
-      this.fetchEmailsFromEs() });
+    this.setState({ dateFilters, currentPage: 1 });
   }
 
   setSortOrder(option){
-    this.setState({ sortOrder: option, currentPage: 1, loading: true }, () => { 
-      this.fetchEmailsFromEs() });
+    this.setState({ sortOrder: option, currentPage: 1, loading: true });
   }
 
   selectEmail(id){
@@ -141,17 +199,13 @@ class App extends React.Component {
   nextPage(){
     let currentPage = this.state.currentPage;
     currentPage++; // Need to figure out if you're on the last page or not, but do this in Results
-    this.setState( { currentPage }, () => { 
-      this.setState( { loading: true } );
-      this.fetchEmailsFromEs() });
+    this.setState( { currentPage });
   }
 
   prevPage(){
     let currentPage = this.state.currentPage;
     currentPage--;
-    this.setState( { currentPage }, () => { 
-      this.setState( { loading: true } );
-      this.fetchEmailsFromEs() });
+    this.setState( { currentPage });
   }
 
   render() {
