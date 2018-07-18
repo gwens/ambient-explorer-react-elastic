@@ -1,29 +1,28 @@
 import React from 'react';
 import EmailPreview from './EmailPreview';
 
-class Results extends React.Component {
-  render() {
-    // Search results are handled as an array of ids
-    const results = Object.keys(this.props.emails);
-    const currentPage = this.props.currentPage;
-    const numPages = Math.ceil(this.props.hits / this.props.resultsPerPage);
-    return (
-      <div className={this.props.selectedEmail ? "results active" : "results"}>
-        <div className="results-controls">
-          <button onClick={this.props.prevPage} disabled={currentPage === 1}>&#8249;&#8249;</button>
-          <span>page: {currentPage}/{numPages}</span>
-          <button onClick={currentPage < numPages ? this.props.nextPage : null} disabled={currentPage === numPages}>&#8250;&#8250;</button>
-        </div>
-        <div className={this.props.loading ? "loader" : "loader disabled"}></div>
-        <ul>
-          {
-            results
-              .map(key => <EmailPreview key={key} index={key} details={this.props.emails[key]} selectEmail={this.props.selectEmail} selectedEmail={this.props.selectedEmail} />)
-          }
-        </ul>
+const Results = (props) => {
+  const { emails, selectEmail, selectedEmail, currentPage, nextPage, prevPage, hits, resultsPerPage, loading } = props;
+  // Search results are handled as an array of ids
+  const results = Object.keys(emails);
+  // Calculate number of pages
+  const numPages = Math.ceil(hits/resultsPerPage);
+  return (
+    <div className={selectedEmail ? "results active" : "results"}>
+      <div className="results-controls">
+        <button onClick={prevPage} disabled={currentPage === 1}>&#8249;&#8249;</button>
+        <span>page: {currentPage}/{numPages}</span>
+        <button onClick={currentPage < numPages ? nextPage : null} disabled={currentPage === numPages}>&#8250;&#8250;</button>
       </div>
-    )
-  }
+      <div className={loading ? "loader" : "loader disabled"}></div>
+      <ul>
+        {
+          results
+            .map(key => <EmailPreview key={key} index={key} details={emails[key]} selectEmail={selectEmail} selectedEmail={selectedEmail} />)
+        }
+      </ul>
+    </div>
+  )
 }
 
 export default Results;
