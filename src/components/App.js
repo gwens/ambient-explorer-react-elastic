@@ -37,6 +37,11 @@ class App extends React.Component {
       currentPage: 1,
       loading: true
     };
+    // Set the range of years for the app
+    this.dateRange = {
+      yearFrom: 1994,
+      yearTo: 2017
+    }
     // Get emails from elasticsearch
     this.resultsPerPage = 15;
     this.fetchEmailsFromEs();
@@ -201,7 +206,7 @@ class App extends React.Component {
     return (
       <div className="navigator">
         <Header />
-        <SearchBar setSearchString={this.setSearchString} dateFilters={this.state.dateFilters} setDateFilters={this.setDateFilters} toggleSearchFilters={this.toggleSearchFilters} searchFilters={this.state.searchFilters} sortOrder={this.state.sortOrder} setSortOrder={this.setSortOrder} clearEmailSelection={this.clearEmailSelection} searchString={this.state.searchString}/>
+        <SearchBar setSearchString={this.setSearchString} dateFilters={this.state.dateFilters} setDateFilters={this.setDateFilters} dateRange = {this.dateRange} toggleSearchFilters={this.toggleSearchFilters} searchFilters={this.state.searchFilters} sortOrder={this.state.sortOrder} setSortOrder={this.setSortOrder} clearEmailSelection={this.clearEmailSelection} searchString={this.state.searchString}/>
         <div className="main-container">
           <Results emails={this.state.emails} selectEmail={this.selectEmail} selectedEmail={this.state.selectedEmail} currentPage={this.state.currentPage} nextPage={this.nextPage} prevPage={this.prevPage} hits={this.state.hits} resultsPerPage={this.resultsPerPage} loading={this.state.loading} />
           <Viewer selectedEmail={this.state.emails[this.state.selectedEmail]} clearEmailSelection={this.clearEmailSelection} searchString={this.state.searchString}/>

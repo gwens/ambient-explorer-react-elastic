@@ -17,7 +17,7 @@ class SearchBar extends React.Component {
   }
 
   render() {
-    const { searchFilters, sortOrder, toggleSearchFilters, setSortOrder, dateFilters, setDateFilters } = this.props;
+    const { searchFilters, sortOrder, toggleSearchFilters, setSortOrder, dateFilters, setDateFilters, dateRange } = this.props;
     return (
         <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
           <input className="search" onChange={(e) => this.submitSearch(e)} ref={this.searchRef} type="text" placeholder="Search..."/>
@@ -26,7 +26,7 @@ class SearchBar extends React.Component {
             <label>sender<input onChange={(e) => toggleSearchFilters(e.target.value)} type="checkbox" value="sender" checked={searchFilters.sender}/></label>
             <label>content<input onChange={(e) => toggleSearchFilters(e.target.value)} type="checkbox" value="content" checked={searchFilters.content}/></label>
           </div>
-          <DateRangePicker dateFilters={dateFilters} setDateFilters={setDateFilters} />
+          <DateRangePicker dateFilters={dateFilters} setDateFilters={setDateFilters} dateRange={dateRange} />
           <div className="search-elem">Sort by:
             
             <input onChange={(e) => setSortOrder(e.target.value)} type="radio" id="sortByOldest" name="sortOrder" value="oldest" checked={sortOrder == "oldest" ? true : false} />

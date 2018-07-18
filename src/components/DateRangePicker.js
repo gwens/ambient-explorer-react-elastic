@@ -1,8 +1,8 @@
 import React from "react";
 
 class DateRangePicker extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.updateDateFilters = this.updateDateFilters.bind(this);
   }
   updateDateFilters(event) {
@@ -18,7 +18,7 @@ class DateRangePicker extends React.Component {
 
   render() {
     // Testing greying out options in the dropdowns
-    const dateFilters = this.props.dateFilters;
+    const { dateFilters, dateRange } = this.props;
     const months = {
       "01": "JAN", 
       "02": "FEB", 
@@ -35,7 +35,7 @@ class DateRangePicker extends React.Component {
     };
     // Build years array as an array of strings
     const years = [];
-    for (let i = 1994; i <= 2017; i++){ years.push(i.toString())};
+    for (let i = dateRange.yearFrom; i <= dateRange.yearTo; i++){ years.push(i.toString())};
     return (
       <div className="search-elem">
         <label>From:
@@ -47,7 +47,7 @@ class DateRangePicker extends React.Component {
               .map(key => <option key={key} value={key}>{months[key]}</option>)
           }
         </select>
-        <select onChange={(e) => this.updateDateFilters(e)}  ref={(input) => this.yearFrom = input} defaultValue="1994">
+        <select onChange={(e) => this.updateDateFilters(e)}  ref={(input) => this.yearFrom = input} defaultValue={dateRange.yearFrom.toString()}>
           {
             years
               .map(year => <option key={year} value={year}>{year}</option>)
@@ -63,7 +63,7 @@ class DateRangePicker extends React.Component {
               .map(key => <option key={key} value={key} disabled={(dateFilters.yearTo === dateFilters.yearFrom && dateFilters.monthFrom > key) ? true : false}>{months[key]}</option>)
           }
         </select>
-        <select onChange={(e) => this.updateDateFilters(e)} ref={(input) => this.yearTo = input} defaultValue="2017">
+        <select onChange={(e) => this.updateDateFilters(e)} ref={(input) => this.yearTo = input} defaultValue={dateRange.yearTo.toString()}>
           {
             years
               .map(year => <option key={year} value={year} disabled={dateFilters.yearFrom <= year ? false : true}>{year}</option>)
