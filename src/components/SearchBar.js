@@ -17,16 +17,16 @@ class SearchBar extends React.Component {
   }
 
   render() {
-    const { searchFilters, sortOrder, toggleSearchFilters, setSortOrder } = this.props;
+    const { searchFilters, sortOrder, toggleSearchFilters, setSortOrder, dateFilters, setDateFilters } = this.props;
     return (
         <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
           <input className="search" onChange={(e) => this.submitSearch(e)} ref={this.searchRef} type="text" placeholder="Search..."/>
-          <div className="search-elem" >
+          <div className="search-elem">
             <label>subject<input onChange={(e) => toggleSearchFilters(e.target.value)} type="checkbox" value="subject" checked={searchFilters.subject}/></label>
             <label>sender<input onChange={(e) => toggleSearchFilters(e.target.value)} type="checkbox" value="sender" checked={searchFilters.sender}/></label>
             <label>content<input onChange={(e) => toggleSearchFilters(e.target.value)} type="checkbox" value="content" checked={searchFilters.content}/></label>
           </div>
-          <DateRangePicker dateFilters={this.props.dateFilters} setDateFilters={this.props.setDateFilters} />
+          <DateRangePicker dateFilters={dateFilters} setDateFilters={setDateFilters} />
           <div className="search-elem">Sort by:
             
             <input onChange={(e) => setSortOrder(e.target.value)} type="radio" id="sortByOldest" name="sortOrder" value="oldest" checked={sortOrder == "oldest" ? true : false} />
