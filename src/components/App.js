@@ -8,7 +8,7 @@ import { buildElasticSearchQuery } from "../helpers";
 class App extends React.Component {
   constructor() {
     super();
-    //this.fetchEmailsFromEs = this.fetchEmailsFromEs.bind(this);
+    this.fetchEmails = this.fetchEmails.bind(this);
     this.setSearchString = this.setSearchString.bind(this);
     this.toggleSearchFilters = this.toggleSearchFilters.bind(this);
     this.setDateFilters = this.setDateFilters.bind(this);
@@ -48,77 +48,30 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const elasticUrl = "https://search-search-archive-sxxeh2lvo7lacugez36nv2f4bq.us-east-2.es.amazonaws.com/emails/_search";
-    const searchParams = {
-      searchString: this.state.searchString,
-      searchFilters: this.state.searchFilters,
-      dateFilters: this.state.dateFilters, 
-      sortOrder: this.state.sortOrder
-    }
-    const query = buildElasticSearchQuery(searchParams, this.state.currentPage, this.resultsPerPage);
-
-    fetch(elasticUrl, {
-      method: 'POST', 
-      body: JSON.stringify(query), 
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    }).then(res => res.json())
-    .catch(error => console.error('Error:', error))
-    .then(response => {
-      let results = {};
-      response.hits.hits.map(hit => {
-        let email = hit._source;
-        email.score = hit._score;
-        let id = hit._source.id;
-        results[`${id}`] = email;
+    this.fetchEmails()
+      .then(response => { 
+        console.log(response.hits);
+        this.setState({ emails: response.emails, hits: response.hits, loading: false });
       });
-      const emails = Object.assign(results);
-      // Record the total hits, to control pagination
-      const hits = response.hits.total;
-      // Set emails and hits into state and stop the spinner
-      this.setState({ emails, hits, loading: false });
-    });
   }
 
-  // NB duplication
-  componentDidUpdate() {
-    const elasticUrl = "https://search-search-archive-sxxeh2lvo7lacugez36nv2f4bq.us-east-2.es.amazonaws.com/emails/_search";
-    const searchParams = {
-      searchString: this.state.searchString,
-      searchFilters: this.state.searchFilters,
-      dateFilters: this.state.dateFilters, 
-      sortOrder: this.state.sortOrder
+  componentDidUpdate(prevProps, prevState) {
+    console.log("update called");
+    //this.setState({ loading: true }); // Causes an update loop
+    // Check if the searchString, searchFilters, dateFilters, sortOrder, or currentPage has changed
+    if (this.state.searchString !== prevState.searchString ||
+        this.state.searchFilters !== prevState.searchFilters ||
+        this.state.dateFilters !== prevState.dateFilters ||
+        this.state.sortOrder !== prevState.sortOrder ||
+        this.state.currentPage !== prevState.currentPage){
+      this.fetchEmails()
+        .then(response => { 
+          this.setState({ emails: response.emails, hits: response.hits, loading: false });
+        });
     }
-    const query = buildElasticSearchQuery(searchParams, this.state.currentPage, this.resultsPerPage);
-
-    fetch(elasticUrl, {
-      method: 'POST', 
-      body: JSON.stringify(query), 
-      headers: new Headers({
-        'Content-Type': 'application/json'
-      })
-    }).then(res => res.json())
-    .catch(error => console.error('Error:', error))
-    .then(response => {
-      let results = {};
-      response.hits.hits.map(hit => {
-        let email = hit._source;
-        email.score = hit._score;
-        let id = hit._source.id;
-        results[`${id}`] = email;
-      });
-      const emails = Object.assign(results);
-      // Record the total hits, to control pagination
-      const hits = response.hits.total;
-      // Set emails and hits into state and stop the spinner
-      this.setState({ emails, hits, loading: false });
-    });
   }
 
-  // TODO: update this to return a promise, then call it from ComponentDidMount and ComponentDidUpdate
-  // Gets emails from elasticsearch
-  /*fetchEmailsFromEs() {
+  fetchEmails(){
     const elasticUrl = "https://search-search-archive-sxxeh2lvo7lacugez36nv2f4bq.us-east-2.es.amazonaws.com/emails/_search";
     const searchParams = {
       searchString: this.state.searchString,
@@ -128,7 +81,7 @@ class App extends React.Component {
     }
     const query = buildElasticSearchQuery(searchParams, this.state.currentPage, this.resultsPerPage);
 
-    fetch(elasticUrl, {
+    return fetch(elasticUrl, {
       method: 'POST', 
       body: JSON.stringify(query), 
       headers: new Headers({
@@ -137,21 +90,18 @@ class App extends React.Component {
     }).then(res => res.json())
     .catch(error => console.error('Error:', error))
     .then(response => {
-      let results = {};
+      let emails = {};
       response.hits.hits.map(hit => {
         let email = hit._source;
         email.score = hit._score;
         let id = hit._source.id;
-        results[`${id}`] = email;
+        emails[`${id}`] = email;
       });
-      const emails = Object.assign(results);
-      // Record the total hits, to control pagination
       const hits = response.hits.total;
-      //this.setState({ hits: response.hits.total });
-      // Return the results
+      // Return the emails and total hits
       return { emails, hits };
     });
-  }*/
+  }
 
   setSearchString(searchString){
     // If searchString is <3 chars, order oldest first by default
@@ -174,14 +124,8 @@ class App extends React.Component {
     });
   }
 
-  setDateFilters(filters){
-    // Create a copy of the current state first... 
-    // Spread operator not working in new build config, need to figure out Babel?
-    //const dateFilters = {...filters};
-    //this.setState({ dateFilters });
-    // Replacing spread with Object.assign (works as object is only one level deep)
-    const dateFilters = Object.assign({}, filters);
-    this.setState({ dateFilters, currentPage: 1 });
+  setDateFilters(dateFilters){
+    this.setState({ dateFilters, currentPage: 1, loading: true });
   }
 
   setSortOrder(option){
@@ -199,13 +143,13 @@ class App extends React.Component {
   nextPage(){
     let currentPage = this.state.currentPage;
     currentPage++; // Need to figure out if you're on the last page or not, but do this in Results
-    this.setState( { currentPage });
+    this.setState( { currentPage, loading: true });
   }
 
   prevPage(){
     let currentPage = this.state.currentPage;
     currentPage--;
-    this.setState( { currentPage });
+    this.setState( { currentPage, loading: true });
   }
 
   render() {
