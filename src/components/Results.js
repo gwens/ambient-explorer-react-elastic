@@ -2,7 +2,7 @@ import React from "react";
 import EmailPreview from "./EmailPreview";
 
 const Results = (props) => {
-  const { emails, selectEmail, selectedEmail, currentPage, nextPage, prevPage, hits, resultsPerPage, loading } = props;
+  const { emails, selectEmail, selectedEmail, currentPage, pageUp, pageDown, hits, resultsPerPage, loading } = props;
   // Search results are handled as an array of ids
   const results = Object.keys(emails);
   // Calculate number of pages
@@ -10,9 +10,9 @@ const Results = (props) => {
   return (
     <div className={selectedEmail ? "results active" : "results"}>
       <div className="results-controls">
-        <button onClick={prevPage} disabled={currentPage === 1}>&#8249;&#8249;</button>
+        <button onClick={pageDown} disabled={currentPage === 1}>&#8249;&#8249;</button>
         <span>page: {currentPage}/{numPages}</span>
-        <button onClick={currentPage < numPages ? nextPage : null} disabled={currentPage === numPages}>&#8250;&#8250;</button>
+        <button onClick={currentPage < numPages ? pageUp : null} disabled={currentPage === numPages}>&#8250;&#8250;</button>
       </div>
       <div className={loading ? "loader" : "loader disabled"}></div>
       <ul>

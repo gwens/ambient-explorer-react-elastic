@@ -15,8 +15,8 @@ class App extends React.Component {
     this.setSortOrder = this.setSortOrder.bind(this);
     this.selectEmail = this.selectEmail.bind(this);
     this.clearEmailSelection = this.clearEmailSelection.bind(this);
-    this.nextPage = this.nextPage.bind(this);
-    this.prevPage = this.prevPage.bind(this);
+    this.pageUp = this.pageUp.bind(this);
+    this.pageDown = this.pageDown.bind(this);
     // Initial state
     this.state = {
       hits: 0,
@@ -135,13 +135,13 @@ class App extends React.Component {
     this.setState({ selectedEmail: null });
   }
 
-  nextPage(){
+  pageUp(){
     let currentPage = this.state.currentPage;
     currentPage++; // Need to figure out if you're on the last page or not, but do this in Results
     this.setState( { currentPage, loading: true, fetchNew: true });
   }
 
-  prevPage(){
+  pageDown(){
     let currentPage = this.state.currentPage;
     currentPage--;
     this.setState( { currentPage, loading: true, fetchNew: true });
@@ -153,7 +153,7 @@ class App extends React.Component {
         <Header />
         <SearchBar setSearchString={this.setSearchString} dateFilters={this.state.dateFilters} setDateFilters={this.setDateFilters} dateRange = {this.dateRange} toggleSearchFilters={this.toggleSearchFilters} searchFilters={this.state.searchFilters} sortOrder={this.state.sortOrder} setSortOrder={this.setSortOrder} clearEmailSelection={this.clearEmailSelection} searchString={this.state.searchString}/>
         <div className="main-container">
-          <Results emails={this.state.emails} selectEmail={this.selectEmail} selectedEmail={this.state.selectedEmail} currentPage={this.state.currentPage} nextPage={this.nextPage} prevPage={this.prevPage} hits={this.state.hits} resultsPerPage={this.resultsPerPage} loading={this.state.loading} />
+          <Results emails={this.state.emails} selectEmail={this.selectEmail} selectedEmail={this.state.selectedEmail} currentPage={this.state.currentPage} pageUp={this.pageUp} pageDown={this.pageDown} hits={this.state.hits} resultsPerPage={this.resultsPerPage} loading={this.state.loading} />
           <Viewer selectedEmail={this.state.emails[this.state.selectedEmail]} clearEmailSelection={this.clearEmailSelection} searchString={this.state.searchString}/>
         </div>
       </div>
