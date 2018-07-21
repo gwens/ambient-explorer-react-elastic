@@ -36,8 +36,8 @@ class App extends React.Component {
       sortOrder: "oldest",
       selectedEmail: null, // Holds the email to be displayed in the viewer
       currentPage: 1,
-      loading: true,
-      fetchNew: false
+      loading: true, // Controls the spinner
+      fetchNew: false // Tracks whether a new ElasticSearch fetch is needed
     };
     // Set the range of years for the app
     this.dateRange = {
@@ -50,14 +50,12 @@ class App extends React.Component {
 
   componentDidMount() {
     this.fetchEmails()
-      .then(response => { 
-        console.log(response.hits);
+      .then(response => {
         this.setState({ emails: response.emails, hits: response.hits, loading: false });
       });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log("update called");
+  componentDidUpdate() {
     if (this.state.fetchNew){
       this.fetchEmails()
         .then(response => { 
@@ -76,6 +74,7 @@ class App extends React.Component {
     }
     const query = buildElasticSearchQuery(searchParams, this.state.currentPage, this.resultsPerPage);
 
+    // Return the promise rather than the results
     return fetch(elasticUrl, {
       method: 'POST', 
       body: JSON.stringify(query), 
@@ -99,24 +98,25 @@ class App extends React.Component {
   }
 
   setSearchString(searchString){
-    // If searchString is <3 chars, order oldest first by default
-    if (searchString.length < 3) {
-      this.setState({ searchString, sortOrder: "oldest", currentPage: 1, fetchNew: true });
-    } else {
+    // If search string is at least 3 chars, run a new search
+    if (searchString.length >= 3) {
       this.setState({ searchString, sortOrder: "relevance", currentPage: 1, fetchNew: true });
     }
+    // Else, if searchString has just dropped below 3 chars, clear the search
+    else if (this.state.searchString.length >= 3){
+      this.setState({ searchString: "", sortOrder: "oldest", currentPage: 1, fetchNew: true })
+    }
+    // Else (if current string and previous string are both <3 chars), do nothing
   }
 
   toggleSearchFilters(filter){
     const currentFilters = this.state.searchFilters;
     // Flip the value of the filter that was clicked
     currentFilters[filter] = !currentFilters[filter];
-    this.setState( { searchFilters: currentFilters }, () => {
-      // Only fetch a new set of emails and revert to page 1 if there is a search term
-      if (this.state.searchString.length >= 3) {
-        this.setState( { currentPage: 1, loading: true, fetchNew: true });
-      }
-    });
+    // Only fetch new emails if there is a search in progress
+    this.state.searchString ? 
+      this.setState( { currentPage: 1, loading: true, fetchNew: true }) :
+      this.setState( { searchFilters: currentFilters });
   }
 
   setDateFilters(dateFilters){
