@@ -36,7 +36,8 @@ class App extends React.Component {
       sortOrder: "oldest",
       selectedEmail: null, // Holds the email to be displayed in the viewer
       currentPage: 1,
-      loading: true
+      loading: true,
+      fetchNew: false
     };
     // Set the range of years for the app
     this.dateRange = {
@@ -57,16 +58,10 @@ class App extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     console.log("update called");
-    //this.setState({ loading: true }); // Causes an update loop
-    // Check if the searchString, searchFilters, dateFilters, sortOrder, or currentPage has changed
-    if (this.state.searchString !== prevState.searchString ||
-        this.state.searchFilters !== prevState.searchFilters ||
-        this.state.dateFilters !== prevState.dateFilters ||
-        this.state.sortOrder !== prevState.sortOrder ||
-        this.state.currentPage !== prevState.currentPage){
+    if (this.state.fetchNew){
       this.fetchEmails()
         .then(response => { 
-          this.setState({ emails: response.emails, hits: response.hits, loading: false });
+          this.setState({ emails: response.emails, hits: response.hits, loading: false, fetchNew: false });
         });
     }
   }
@@ -106,9 +101,9 @@ class App extends React.Component {
   setSearchString(searchString){
     // If searchString is <3 chars, order oldest first by default
     if (searchString.length < 3) {
-      this.setState({ searchString, sortOrder: "oldest", currentPage: 1 });
+      this.setState({ searchString, sortOrder: "oldest", currentPage: 1, fetchNew: true });
     } else {
-      this.setState({ searchString, sortOrder: "relevance", currentPage: 1 });
+      this.setState({ searchString, sortOrder: "relevance", currentPage: 1, fetchNew: true });
     }
   }
 
@@ -119,17 +114,17 @@ class App extends React.Component {
     this.setState( { searchFilters: currentFilters }, () => {
       // Only fetch a new set of emails and revert to page 1 if there is a search term
       if (this.state.searchString.length >= 3) {
-        this.setState( { currentPage: 1, loading: true });
+        this.setState( { currentPage: 1, loading: true, fetchNew: true });
       }
     });
   }
 
   setDateFilters(dateFilters){
-    this.setState({ dateFilters, currentPage: 1, loading: true });
+    this.setState({ dateFilters, currentPage: 1, loading: true, fetchNew: true });
   }
 
   setSortOrder(option){
-    this.setState({ sortOrder: option, currentPage: 1, loading: true });
+    this.setState({ sortOrder: option, currentPage: 1, loading: true, fetchNew: true });
   }
 
   selectEmail(id){
@@ -143,13 +138,13 @@ class App extends React.Component {
   nextPage(){
     let currentPage = this.state.currentPage;
     currentPage++; // Need to figure out if you're on the last page or not, but do this in Results
-    this.setState( { currentPage, loading: true });
+    this.setState( { currentPage, loading: true, fetchNew: true });
   }
 
   prevPage(){
     let currentPage = this.state.currentPage;
     currentPage--;
-    this.setState( { currentPage, loading: true });
+    this.setState( { currentPage, loading: true, fetchNew: true });
   }
 
   render() {
