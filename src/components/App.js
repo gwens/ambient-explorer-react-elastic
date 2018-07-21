@@ -100,11 +100,11 @@ class App extends React.Component {
   setSearchString(searchString){
     // If search string is at least 3 chars, run a new search
     if (searchString.length >= 3) {
-      this.setState({ searchString, sortOrder: "relevance", currentPage: 1, fetchNew: true });
+      this.setState({ searchString, sortOrder: "relevance", currentPage: 1, loading: true, fetchNew: true });
     }
     // Else, if searchString has just dropped below 3 chars, clear the search
     else if (this.state.searchString.length >= 3){
-      this.setState({ searchString: "", sortOrder: "oldest", currentPage: 1, fetchNew: true })
+      this.setState({ searchString: "", sortOrder: "oldest", currentPage: 1, loading: true, fetchNew: true })
     }
     // Else (if current string and previous string are both <3 chars), do nothing
   }
