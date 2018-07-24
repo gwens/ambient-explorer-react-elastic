@@ -391,15 +391,3 @@ header .icon {
     transform: rotate(360deg);
   }
 }
-
-
-.loader.disabled {
-  width: 0px;
-  height: 0px;
-  border: none;
-  overflow: hidden;
-  transition: height width 0.2s;
-  -moz-transition: height 0.2s; /* Firefox 4 */
-  -webkit-transition: height 0.2s; /* Safari and Chrome */
-  -o-transition: height 0.2s; /* Opera */
-}

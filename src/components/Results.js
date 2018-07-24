@@ -16,12 +16,13 @@ const Results = (props) => {
       <button onClick={currentPage < numPages ? pageUp : null} disabled={currentPage === numPages}>&#8250;&#8250;</button>
     </div>
   const noResults = <div className="results-none">No results found</div>
+  const loader = <div className="loader" />
   //}
   return (
     <div className={selectedEmail ? "results active" : "results"}>
       {(Object.keys(emails).length > 0) && resultsControls}
       {(hits === 0) && noResults}
-      <div className={loading ? "loader" : "loader disabled"}></div>
+      {loading && loader}
       <ul>
         {
           results
