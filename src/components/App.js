@@ -19,7 +19,7 @@ class App extends React.Component {
     this.pageDown = this.pageDown.bind(this);
     // Initial state
     this.state = {
-      hits: 0,
+      hits: 1, // Holds the number of hits, should be non-zero when the app starts
       emails: {},
       searchString: "",
       searchFilters: {
