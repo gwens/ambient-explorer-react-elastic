@@ -65,7 +65,7 @@ class App extends React.Component {
   }
 
   fetchEmails(){
-    const elasticUrl = "https://search-search-archive-sxxeh2lvo7lacugez36nv2f4bq.us-east-2.es.amazonaws.com/emails/_search";
+    const elasticUrl = "https://api.ambient-explorer.ml/emails/_search";
     const searchParams = {
       searchString: this.state.searchString,
       searchFilters: this.state.searchFilters,
