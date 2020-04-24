@@ -91,7 +91,7 @@ class App extends React.Component {
         let id = hit._source.id;
         emails[`${id}`] = email;
       });
-      const hits = response.hits.total;
+      const hits = response.hits.total.value;
       // Return the emails and total hits
       return { emails, hits };
     });
